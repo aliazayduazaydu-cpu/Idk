@@ -1,0 +1,704 @@
+--==================================================
+-- 🎭 CUSTOM ANIMATION MENU
+-- LocalScript
+-- StarterPlayer > StarterPlayerScripts
+--==================================================
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+
+--==================================================
+-- 🎬 ANIMATION SETS
+--==================================================
+
+local AnimationSets = {
+
+	["Troll Animation"] = {
+		Idle = "rbxassetid://119810104205917",
+		Walk = "rbxassetid://81474811286461",
+		Run = "rbxassetid://118343267142519",
+		Jump = "rbxassetid://91133306449431",
+		Fall = "rbxassetid://91133306449431",
+		Climb = "rbxassetid://89870874920451"
+	},
+
+	["Animation 2"] = {
+		Idle = "rbxassetid://107929595486701",
+		Walk = "rbxassetid://129208022494357",
+		Run = "rbxassetid://129208022494357",
+		Jump = "rbxassetid://81340037779559",
+		Fall = "rbxassetid://81340037779559",
+		Climb = "rbxassetid://89870874920451"
+	}
+}
+
+--==================================================
+-- ⚙️ SETTINGS
+--==================================================
+
+local RUN_SPEED = 20
+local Enabled = true
+local SelectedSet = "Troll Animation"
+
+local Character
+local Humanoid
+local Animator
+
+local Tracks = {}
+local CurrentTrack
+
+local StateConnection
+local RunningConnection
+
+--==================================================
+-- 🖥️ GUI
+--==================================================
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "CustomAnimationGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = Player:WaitForChild("PlayerGui")
+
+--==================================================
+-- 🔘 OPEN / CLOSE BUTTON
+--==================================================
+
+local OpenButton = Instance.new("TextButton")
+OpenButton.Name = "OpenButton"
+OpenButton.Size = UDim2.new(0, 48, 0, 48)
+OpenButton.Position = UDim2.new(0, 15, 0.5, -24)
+OpenButton.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+OpenButton.BorderSizePixel = 0
+OpenButton.Text = "×"
+OpenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+OpenButton.TextSize = 27
+OpenButton.Font = Enum.Font.GothamBold
+OpenButton.Parent = ScreenGui
+
+local OpenCorner = Instance.new("UICorner")
+OpenCorner.CornerRadius = UDim.new(0, 10)
+OpenCorner.Parent = OpenButton
+
+local OpenStroke = Instance.new("UIStroke")
+OpenStroke.Color = Color3.fromRGB(85, 85, 95)
+OpenStroke.Thickness = 1.5
+OpenStroke.Parent = OpenButton
+
+--==================================================
+-- 📦 MAIN FRAME
+--==================================================
+
+local Main = Instance.new("Frame")
+Main.Name = "Main"
+Main.Size = UDim2.new(0, 255, 0, 220)
+Main.Position = UDim2.new(0, 75, 0.5, -110)
+Main.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+Main.BorderSizePixel = 0
+Main.Visible = true
+Main.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = Main
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(70, 70, 80)
+MainStroke.Thickness = 1.5
+MainStroke.Parent = Main
+
+--==================================================
+-- 🔴 HEADER
+--==================================================
+
+local Header = Instance.new("Frame")
+Header.Size = UDim2.new(1, 0, 0, 44)
+Header.BackgroundColor3 = Color3.fromRGB(28, 28, 34)
+Header.BorderSizePixel = 0
+Header.Parent = Main
+
+local HeaderCorner = Instance.new("UICorner")
+HeaderCorner.CornerRadius = UDim.new(0, 12)
+HeaderCorner.Parent = Header
+
+local RedLine = Instance.new("Frame")
+RedLine.Size = UDim2.new(1, 0, 0, 3)
+RedLine.Position = UDim2.new(0, 0, 1, -3)
+RedLine.BackgroundColor3 = Color3.fromRGB(220, 45, 55)
+RedLine.BorderSizePixel = 0
+RedLine.Parent = Header
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -20, 1, 0)
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "🎭  Animation"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 18
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Header
+
+--==================================================
+-- 📄 PAGES
+--==================================================
+
+local MainPage = Instance.new("Frame")
+MainPage.Size = UDim2.new(1, 0, 1, -44)
+MainPage.Position = UDim2.new(0, 0, 0, 44)
+MainPage.BackgroundTransparency = 1
+MainPage.Parent = Main
+
+local SelectPage = Instance.new("Frame")
+SelectPage.Size = UDim2.new(1, 0, 1, -44)
+SelectPage.Position = UDim2.new(0, 0, 0, 44)
+SelectPage.BackgroundTransparency = 1
+SelectPage.Visible = false
+SelectPage.Parent = Main
+
+--==================================================
+-- 🟢 STATUS
+--==================================================
+
+local Status = Instance.new("TextLabel")
+Status.Size = UDim2.new(1, -30, 0, 28)
+Status.Position = UDim2.new(0, 15, 0, 8)
+Status.BackgroundTransparency = 1
+Status.Text = "الحالة: تشغيل 🟢"
+Status.TextColor3 = Color3.fromRGB(70, 255, 120)
+Status.TextSize = 14
+Status.Font = Enum.Font.GothamBold
+Status.TextXAlignment = Enum.TextXAlignment.Left
+Status.Parent = MainPage
+
+--==================================================
+-- 🎭 CURRENT ANIMATION
+--==================================================
+
+local CurrentLabel = Instance.new("TextLabel")
+CurrentLabel.Size = UDim2.new(1, -30, 0, 25)
+CurrentLabel.Position = UDim2.new(0, 15, 0, 38)
+CurrentLabel.BackgroundTransparency = 1
+CurrentLabel.Text = "الحالي: Troll Animation"
+CurrentLabel.TextColor3 = Color3.fromRGB(180, 180, 190)
+CurrentLabel.TextSize = 13
+CurrentLabel.Font = Enum.Font.Gotham
+CurrentLabel.TextXAlignment = Enum.TextXAlignment.Left
+CurrentLabel.Parent = MainPage
+
+--==================================================
+-- 🎬 SELECT BUTTON
+--==================================================
+
+local SelectButton = Instance.new("TextButton")
+SelectButton.Size = UDim2.new(1, -30, 0, 48)
+SelectButton.Position = UDim2.new(0, 15, 0, 70)
+SelectButton.BackgroundColor3 = Color3.fromRGB(43, 43, 52)
+SelectButton.BorderSizePixel = 0
+SelectButton.Text = "🎭   اختيار الأنميشن"
+SelectButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SelectButton.TextSize = 15
+SelectButton.Font = Enum.Font.GothamBold
+SelectButton.Parent = MainPage
+
+local SelectCorner = Instance.new("UICorner")
+SelectCorner.CornerRadius = UDim.new(0, 9)
+SelectCorner.Parent = SelectButton
+
+--==================================================
+-- 🟢 TOGGLE
+--==================================================
+
+local Toggle = Instance.new("TextButton")
+Toggle.Size = UDim2.new(1, -30, 0, 45)
+Toggle.Position = UDim2.new(0, 15, 0, 126)
+Toggle.BackgroundColor3 = Color3.fromRGB(35, 180, 80)
+Toggle.BorderSizePixel = 0
+Toggle.Text = "إيقاف الأنميشن"
+Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+Toggle.TextSize = 15
+Toggle.Font = Enum.Font.GothamBold
+Toggle.Parent = MainPage
+
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(0, 9)
+ToggleCorner.Parent = Toggle
+
+--==================================================
+-- 📋 SELECT PAGE HEADER
+--==================================================
+
+local BackButton = Instance.new("TextButton")
+BackButton.Size = UDim2.new(0, 42, 0, 38)
+BackButton.Position = UDim2.new(0, 10, 0, 8)
+BackButton.BackgroundColor3 = Color3.fromRGB(43, 43, 52)
+BackButton.BorderSizePixel = 0
+BackButton.Text = "➡️"
+BackButton.TextSize = 19
+BackButton.Font = Enum.Font.GothamBold
+BackButton.Parent = SelectPage
+
+local BackCorner = Instance.new("UICorner")
+BackCorner.CornerRadius = UDim.new(0, 8)
+BackCorner.Parent = BackButton
+
+local ChooseTitle = Instance.new("TextLabel")
+ChooseTitle.Size = UDim2.new(1, -65, 0, 38)
+ChooseTitle.Position = UDim2.new(0, 58, 0, 8)
+ChooseTitle.BackgroundTransparency = 1
+ChooseTitle.Text = "اختيار الأنميشن"
+ChooseTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChooseTitle.TextSize = 16
+ChooseTitle.Font = Enum.Font.GothamBold
+ChooseTitle.TextXAlignment = Enum.TextXAlignment.Left
+ChooseTitle.Parent = SelectPage
+
+--==================================================
+-- 📜 ANIMATION LIST
+--==================================================
+
+local List = Instance.new("ScrollingFrame")
+List.Name = "AnimationList"
+List.Size = UDim2.new(1, -20, 1, -58)
+List.Position = UDim2.new(0, 10, 0, 55)
+List.BackgroundTransparency = 1
+List.BorderSizePixel = 0
+List.ScrollBarThickness = 4
+List.ScrollBarImageTransparency = 0.25
+List.CanvasSize = UDim2.new(0, 0, 0, 0)
+List.Parent = SelectPage
+
+local Layout = Instance.new("UIListLayout")
+Layout.Padding = UDim.new(0, 8)
+Layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+Layout.SortOrder = Enum.SortOrder.LayoutOrder
+Layout.Parent = List
+
+--==================================================
+-- 🖱️ DRAG MENU
+--==================================================
+
+local Dragging = false
+local DragStart
+local StartPosition
+
+Header.InputBegan:Connect(function(Input)
+
+	if Input.UserInputType == Enum.UserInputType.MouseButton1
+		or Input.UserInputType == Enum.UserInputType.Touch then
+
+		Dragging = true
+		DragStart = Input.Position
+		StartPosition = Main.Position
+
+		Input.Changed:Connect(function()
+
+			if Input.UserInputState == Enum.UserInputState.End then
+				Dragging = false
+			end
+
+		end)
+
+	end
+
+end)
+
+UserInputService.InputChanged:Connect(function(Input)
+
+	if not Dragging then
+		return
+	end
+
+	if Input.UserInputType == Enum.UserInputType.MouseMovement
+		or Input.UserInputType == Enum.UserInputType.Touch then
+
+		local Delta = Input.Position - DragStart
+
+		Main.Position = UDim2.new(
+			StartPosition.X.Scale,
+			StartPosition.X.Offset + Delta.X,
+			StartPosition.Y.Scale,
+			StartPosition.Y.Offset + Delta.Y
+		)
+
+	end
+
+end)
+
+--==================================================
+-- 🔘 OPEN / CLOSE
+--==================================================
+
+OpenButton.Activated:Connect(function()
+
+	Main.Visible = not Main.Visible
+
+	if Main.Visible then
+		OpenButton.Text = "×"
+	else
+		OpenButton.Text = "+"
+	end
+
+end)
+
+--==================================================
+-- ⛔ STOP CURRENT
+--==================================================
+
+local function StopCurrent()
+
+	if CurrentTrack then
+
+		if CurrentTrack.IsPlaying then
+			CurrentTrack:Stop(0.12)
+		end
+
+		CurrentTrack = nil
+
+	end
+
+end
+
+--==================================================
+-- ▶️ PLAY ANIMATION
+--==================================================
+
+local function PlayAnimation(Track)
+
+	if not Enabled then
+		return
+	end
+
+	if not Track then
+		return
+	end
+
+	if CurrentTrack == Track and Track.IsPlaying then
+		return
+	end
+
+	StopCurrent()
+
+	CurrentTrack = Track
+	Track:Play(0.12)
+
+end
+
+--==================================================
+-- 🔄 LOAD ANIMATIONS
+--==================================================
+
+local function LoadAnimations()
+
+	if not Animator then
+		return
+	end
+
+	StopCurrent()
+
+	for _, Track in pairs(Tracks) do
+
+		pcall(function()
+			Track:Stop()
+			Track:Destroy()
+		end)
+
+	end
+
+	Tracks = {}
+
+	local Set = AnimationSets[SelectedSet]
+
+	if not Set then
+		return
+	end
+
+	for Name, ID in pairs(Set) do
+
+		local Animation = Instance.new("Animation")
+		Animation.Name = Name
+		Animation.AnimationId = ID
+
+		local Track = Animator:LoadAnimation(Animation)
+
+		Track.Priority = Enum.AnimationPriority.Action
+
+		if Name == "Idle"
+			or Name == "Walk"
+			or Name == "Run"
+			or Name == "Fall"
+			or Name == "Climb" then
+
+			Track.Looped = true
+
+		else
+
+			Track.Looped = false
+
+		end
+
+		Tracks[Name] = Track
+
+	end
+
+end
+
+--==================================================
+-- 🎮 UPDATE ANIMATION
+--==================================================
+
+local function UpdateAnimation()
+
+	if not Enabled then
+		return
+	end
+
+	if not Humanoid then
+		return
+	end
+
+	if Humanoid.Health <= 0 then
+		return
+	end
+
+	local State = Humanoid:GetState()
+	local Moving = Humanoid.MoveDirection.Magnitude > 0.05
+
+	-- قفز
+	if State == Enum.HumanoidStateType.Jumping then
+
+		PlayAnimation(Tracks.Jump)
+		return
+
+	end
+
+	-- سقوط
+	if State == Enum.HumanoidStateType.Freefall then
+
+		PlayAnimation(Tracks.Fall)
+		return
+
+	end
+
+	-- تسلق / Clip
+	if State == Enum.HumanoidStateType.Climbing then
+
+		PlayAnimation(Tracks.Climb)
+		return
+
+	end
+
+	-- مشي / ركض
+	if Moving then
+
+		if Humanoid.WalkSpeed >= RUN_SPEED then
+			PlayAnimation(Tracks.Run)
+		else
+			PlayAnimation(Tracks.Walk)
+		end
+
+		return
+
+	end
+
+	-- وقوف
+	PlayAnimation(Tracks.Idle)
+
+end
+
+--==================================================
+-- 👤 CHARACTER
+--==================================================
+
+local function SetupCharacter(NewCharacter)
+
+	Character = NewCharacter
+
+	Humanoid = Character:WaitForChild("Humanoid")
+
+	Animator = Humanoid:FindFirstChildOfClass("Animator")
+
+	if not Animator then
+
+		Animator = Instance.new("Animator")
+		Animator.Parent = Humanoid
+
+	end
+
+	LoadAnimations()
+
+	if StateConnection then
+		StateConnection:Disconnect()
+	end
+
+	if RunningConnection then
+		RunningConnection:Disconnect()
+	end
+
+	StateConnection = Humanoid.StateChanged:Connect(function()
+		UpdateAnimation()
+	end)
+
+	RunningConnection = Humanoid.Running:Connect(function()
+		UpdateAnimation()
+	end)
+
+	task.wait(0.2)
+
+	if Enabled then
+		PlayAnimation(Tracks.Idle)
+	end
+
+end
+
+--==================================================
+-- 🎭 CREATE ANIMATION BUTTON
+--==================================================
+
+local function CreateAnimationButton(Name, Order)
+
+	local Button = Instance.new("TextButton")
+
+	Button.Name = Name
+	Button.LayoutOrder = Order
+	Button.Size = UDim2.new(1, -5, 0, 48)
+	Button.BackgroundColor3 = Color3.fromRGB(35, 35, 43)
+	Button.BorderSizePixel = 0
+	Button.Text = "🎭   " .. Name
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 15
+	Button.Font = Enum.Font.GothamBold
+	Button.Parent = List
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(0, 9)
+	Corner.Parent = Button
+
+	local Stroke = Instance.new("UIStroke")
+	Stroke.Color = Color3.fromRGB(65, 65, 75)
+	Stroke.Thickness = 1
+	Stroke.Parent = Button
+
+	Button.Activated:Connect(function()
+
+		SelectedSet = Name
+
+		CurrentLabel.Text = "الحالي: " .. Name
+
+		LoadAnimations()
+
+		SelectPage.Visible = false
+		MainPage.Visible = true
+
+		if Enabled then
+			PlayAnimation(Tracks.Idle)
+		end
+
+	end)
+
+end
+
+--==================================================
+-- 📋 ADD ANIMATION SETS
+--==================================================
+
+local Order = 0
+
+for Name in pairs(AnimationSets) do
+
+	Order += 1
+
+	CreateAnimationButton(Name, Order)
+
+end
+
+--==================================================
+-- 📏 LIST SIZE
+--==================================================
+
+local function UpdateCanvas()
+
+	List.CanvasSize = UDim2.new(
+		0,
+		0,
+		0,
+		Layout.AbsoluteContentSize.Y + 12
+	)
+
+end
+
+Layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(UpdateCanvas)
+
+UpdateCanvas()
+
+--==================================================
+-- 🎭 OPEN ANIMATION SELECTION
+--==================================================
+
+SelectButton.Activated:Connect(function()
+
+	MainPage.Visible = false
+	SelectPage.Visible = true
+
+end)
+
+--==================================================
+-- ➡️ BACK TO MAIN
+--==================================================
+
+BackButton.Activated:Connect(function()
+
+	SelectPage.Visible = false
+	MainPage.Visible = true
+
+end)
+
+--==================================================
+-- 🟢 ON / 🔴 OFF
+--==================================================
+
+Toggle.Activated:Connect(function()
+
+	Enabled = not Enabled
+
+	if Enabled then
+
+		Status.Text = "الحالة: تشغيل 🟢"
+		Status.TextColor3 = Color3.fromRGB(70, 255, 120)
+
+		Toggle.Text = "إيقاف الأنميشن"
+		Toggle.BackgroundColor3 = Color3.fromRGB(35, 180, 80)
+
+		LoadAnimations()
+		UpdateAnimation()
+
+	else
+
+		Status.Text = "الحالة: إيقاف 🔴"
+		Status.TextColor3 = Color3.fromRGB(255, 80, 80)
+
+		Toggle.Text = "تشغيل الأنميشن"
+		Toggle.BackgroundColor3 = Color3.fromRGB(190, 45, 55)
+
+		StopCurrent()
+
+	end
+
+end)
+
+--==================================================
+-- 🚀 START
+--==================================================
+
+if Player.Character then
+	SetupCharacter(Player.Character)
+end
+
+Player.CharacterAdded:Connect(function(NewCharacter)
+
+	task.wait(0.5)
+
+	SetupCharacter(NewCharacter)
+
+end)
