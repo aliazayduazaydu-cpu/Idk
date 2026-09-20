@@ -1,0 +1,41 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Roblox random scripts", "Ocean")
+
+
+local Tab = Window:NewTab("scripts")
+local Section = Tab:NewSection("script")
+
+Section:NewButton("animation r6", "animation", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-R6-animationzz-194051"))()
+end)
+
+Section:NewButton("admin fly", "fly", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
+end)
+
+Section:NewButton("jerk", "why", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Jerk-off-script-OG-245780"))()
+end)
+
+Section:NewButton("all game remote", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
+end)
+
+Section:NewButton("infinity yield", "infinity yield", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
+end)
+
+Section:NewButton("bang", "sus", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RAHMA-Cc-SAMLAT-228730"))()
+end)
+
+local Tab = Window:NewTab("game scripts")
+local Section = Tab:NewSection("script")
+
+Section:NewButton("mm2", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RuzHub-239052"))()
+end)
+
+Section:NewButton("steal an egg", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua "))()
+end)
