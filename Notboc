@@ -43,3 +43,7 @@ end)
 Section:NewButton("99 days", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/99-Nights-in-the-Forest-SNOW-BIOME-KEYLESS-BEST-99-NIGHTS-IN-THE-FOREST-SCRIPT-VOIDWARE-47274"))()
 end)
+
+Section:NewButton("Brookhaven", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Brookhaven-RP-Trakis-Hub-228928"))()
+end)
