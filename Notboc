@@ -33,6 +33,10 @@ Section:NewButton("invisible", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
 end)
 
+Section:NewButton("wallhop", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-V3-46344"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
