@@ -29,6 +29,10 @@ Section:NewButton("bang", "sus", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RAHMA-Cc-SAMLAT-228730"))()
 end)
 
+Section:NewButton("invisible", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
