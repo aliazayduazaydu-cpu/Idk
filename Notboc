@@ -67,3 +67,7 @@ end)
 Section:NewButton("blox fruit", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-New-redz-hub-138537"))()
 end)
+
+Section:NewButton("rivals", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/panelhenil-oss/TASTER-/refs/heads/main/taster%203.txt"))()
+end)
