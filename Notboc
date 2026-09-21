@@ -69,6 +69,10 @@ Section:NewButton("animation r6/r15", "idk", function()
 loadstring(game:HttpGet("https://pastefy.app/MR6wKV4Y/raw"))()
 end)
 
+Section:NewButton("r6 animation", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
