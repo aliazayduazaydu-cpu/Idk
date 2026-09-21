@@ -63,3 +63,7 @@ end)
 Section:NewButton("Brookhaven", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Brookhaven-RP-Trakis-Hub-228928"))()
 end)
+
+Section:NewButton("blox fruit", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-New-redz-hub-138537"))()
+end)
