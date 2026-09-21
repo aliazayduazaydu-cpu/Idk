@@ -5,54 +5,54 @@ local Window = Library.CreateLib("Roblox random scripts", "Ocean")
 local Tab = Window:NewTab("scripts")
 local Section = Tab:NewSection("script")
 
-Section:NewButton("animation r6", "animation", function()
+Section:NewButton("animation r6/انميشن", "animation", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-R6-animationzz-194051"))()
 end)
 
-Section:NewButton("admin fly", "fly", function()
+Section:NewButton("admin fly/ادمن طيران", "fly", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
 end)
 
-Section:NewButton("jerk", "why", function()
+Section:NewButton("jerk/عاده سريه", "why", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Jerk-off-script-OG-245780"))()
 end)
 
-Section:NewButton("all game remote", "idk", function()
+Section:NewButton("all game remote/ريمونت يستخدم ل اخذ ادوات", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
 end)
 
-Section:NewButton("infinity yield", "infinity yield", function()
+Section:NewButton("infinity yield/ادمن", "infinity yield", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
 end)
 
-Section:NewButton("bang", "sus", function()
+Section:NewButton("bang/بانق", "sus", function()
 loadstring(game:HttpGet("https://luascript-on.vercel.app/raw/d997c49d-b187-4cb4-ad29-aab0495251c3"))()
 end)
 
-Section:NewButton("invisible", "idk", function()
+Section:NewButton("invisible/اختفاء", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
 end)
 
-Section:NewButton("wallhop", "idk", function()
+Section:NewButton("wallhop/ول هوب", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-V3-46344"))()
 end)
 
-Section:NewButton("hitbox", "idk", function()
+Section:NewButton("hitbox/ضرب عن بعد", "idk", function()
 loadstring(game:HttpGet("https://pastebin.com/raw/XxWj2B1j"))()
 end)
 
-Section:NewButton("npc control", "idk", function()
+Section:NewButton("npc control/تحكم ب بوتات", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-source/refs/heads/main/NPC/source/main.Luau"))()
 end)
 
-Section:NewButton("sus", "idk", function()
+Section:NewButton("sus/غير اخلاقي", "idk", function()
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
 loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
 end)
 
-Section:NewButton("ok-13", "gui", function()
+Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
@@ -62,40 +62,40 @@ Section:NewButton("ok-13", "gui", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/123-User-123/ok13Obfsc/refs/heads/main/obfuscated_script-1776189673820.lua.txt"))() 
 end)
 
-Section:NewButton("animation r6/r15", "idk", function()
+Section:NewButton("animation r6/r15/انمشين", "idk", function()
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
 loadstring(game:HttpGet("https://pastefy.app/MR6wKV4Y/raw"))()
 end)
 
-Section:NewButton("r6 animation", "idk", function()
+Section:NewButton("r6 animation/انميشن", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
 end)
 
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
-Section:NewButton("mm2", "idk", function()
+Section:NewButton("mm2/ام ام تو", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RuzHub-239052"))()
 end)
 
-Section:NewButton("steal an egg", "idk", function()
+Section:NewButton("steal an egg/سرقه بيض", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua "))()
 end)
 
-Section:NewButton("99 days", "idk", function()
+Section:NewButton("99 days/99ليله", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/99-Nights-in-the-Forest-SNOW-BIOME-KEYLESS-BEST-99-NIGHTS-IN-THE-FOREST-SCRIPT-VOIDWARE-47274"))()
 end)
 
-Section:NewButton("Brookhaven", "idk", function()
+Section:NewButton("Brookhaven/ماب بيوت", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Brookhaven-RP-Trakis-Hub-228928"))()
 end)
 
-Section:NewButton("blox fruit", "idk", function()
+Section:NewButton("blox fruit/بلوكص فروت", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-New-redz-hub-138537"))()
 end)
 
-Section:NewButton("rivals", "idk", function()
+Section:NewButton("rivals/رايفلز", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/panelhenil-oss/TASTER-/refs/heads/main/taster%203.txt"))()
 end)
