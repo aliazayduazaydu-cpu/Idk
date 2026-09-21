@@ -52,6 +52,16 @@ Section:NewButton("sus", "idk", function()
 loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
 end)
 
+Section:NewButton("ok-13", "gui", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+
+--https://discord.gg/xNdG833Wd
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/123-User-123/ok13Obfsc/refs/heads/main/obfuscated_script-1776189673820.lua.txt"))() 
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
