@@ -42,13 +42,6 @@ Section:NewButton("npc control/تحكم ب بوتات", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-source/refs/heads/main/NPC/source/main.Luau"))()
 end)
 
-Section:NewButton("sus/غير اخلاقي", "idk", function()
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
-end)
-
 Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
@@ -125,4 +118,11 @@ end)
 
 Section:NewButton("r6 animation/انميشن", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
+end)
+
+Section:NewButton("animation sus/انميشن", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
 end)
