@@ -73,6 +73,10 @@ Section:NewButton("r6 animation/انميشن", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
 end)
 
+Section:NewButton("admin cmd/ادمن", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-40K-EMOTES-KEYLESS-170200"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
