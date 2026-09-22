@@ -77,6 +77,13 @@ Section:NewButton("admin cmd/ادمن", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-40K-EMOTES-KEYLESS-170200"))()
 end)
 
+Section:NewButton("loopfling/فنق سريع في فنق كل", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet('https://pastebin.com/raw/BTeNp4e7'))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
