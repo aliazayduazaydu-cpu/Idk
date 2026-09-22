@@ -88,6 +88,13 @@ Section:NewButton("animation r6 r15/انميشن", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/sypcerr/FECollection/refs/heads/main/script.lua", true))()
 end)
 
+Section:NewButton("toxic/تعصيب ناس", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://pastebin.com/raw/3aVN1Fy5"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
