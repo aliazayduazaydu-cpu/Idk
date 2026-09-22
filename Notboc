@@ -84,6 +84,10 @@ Section:NewButton("loopfling/فنق سريع في فنق كل", "idk", function(
 loadstring(game:HttpGet('https://pastebin.com/raw/BTeNp4e7'))()
 end)
 
+Section:NewButton("animation r6 r15/انميشن", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sypcerr/FECollection/refs/heads/main/script.lua", true))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
