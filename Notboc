@@ -5,9 +5,6 @@ local Window = Library.CreateLib("Roblox random scripts", "Ocean")
 local Tab = Window:NewTab("scripts")
 local Section = Tab:NewSection("script")
 
-Section:NewButton("animation r6/انميشن", "animation", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-R6-animationzz-194051"))()
-end)
 
 Section:NewButton("admin fly/ادمن طيران", "fly", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
@@ -62,17 +59,6 @@ Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/123-User-123/ok13Obfsc/refs/heads/main/obfuscated_script-1776189673820.lua.txt"))() 
 end)
 
-Section:NewButton("animation r6/r15/انمشين", "idk", function()
---[[
-	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
-]]
-loadstring(game:HttpGet("https://pastefy.app/MR6wKV4Y/raw"))()
-end)
-
-Section:NewButton("r6 animation/انميشن", "idk", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
-end)
-
 Section:NewButton("admin cmd/ادمن", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-40K-EMOTES-KEYLESS-170200"))()
 end)
@@ -84,9 +70,6 @@ Section:NewButton("loopfling/فنق سريع في فنق كل", "idk", function(
 loadstring(game:HttpGet('https://pastebin.com/raw/BTeNp4e7'))()
 end)
 
-Section:NewButton("animation r6 r15/انميشن", "idk", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/sypcerr/FECollection/refs/heads/main/script.lua", true))()
-end)
 
 Section:NewButton("toxic/تعصيب ناس", "idk", function()
 --[[
@@ -120,4 +103,26 @@ end)
 
 Section:NewButton("rivals/رايفلز", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/panelhenil-oss/TASTER-/refs/heads/main/taster%203.txt"))()
+end)
+
+local Tab = Window:NewTab("animation")
+local Section = Tab:NewSection("script")
+
+Section:NewButton("animation r6/انميشن", "animation", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FE-R6-animationzz-194051"))()
+end)
+
+Section:NewButton("animation r6/r15/انمشين", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://pastefy.app/MR6wKV4Y/raw"))()
+end)
+
+Section:NewButton("animation r6 r15/انميشن", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sypcerr/FECollection/refs/heads/main/script.lua", true))()
+end)
+
+Section:NewButton("r6 animation/انميشن", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Source-Open-AquaMatrix-25173"))()
 end)
