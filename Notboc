@@ -126,3 +126,7 @@ Section:NewButton("animation sus/انميشن", "idk", function()
 ]]
 loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
 end)
+
+Section:NewButton("r15 animation", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/M1ZZ001/R4D-Revamp/refs/heads/main/Official%20R4D%20Revamp"))()
+end)
