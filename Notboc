@@ -127,6 +127,10 @@ Section:NewButton("animation sus/انميشن", "idk", function()
 loadstring(game:HttpGet("https://pastebin.com/raw/51d2KFfJ"))()
 end)
 
-Section:NewButton("r15 animation", "idk", function()
+Section:NewButton("r15 animation/انميشن", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/M1ZZ001/R4D-Revamp/refs/heads/main/Official%20R4D%20Revamp"))()
+end)
+
+Section:NewButton("emote r15/رقصات", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emote-Script-48024"))()
 end)
