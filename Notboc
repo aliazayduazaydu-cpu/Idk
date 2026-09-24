@@ -75,6 +75,10 @@ Section:NewButton("tiger hub/تايكر سكربت", "ButtonInfo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/balintTheDevX/Tiger-X-V3/main/Tiger%20X%20V3.5%20Fixed"))()
 end)
 
+Section:NewButton("admin/ادمن", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NotAtomz/Atom-Scripts/refs/heads/main/Axiom_Admin_Public_Build"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
