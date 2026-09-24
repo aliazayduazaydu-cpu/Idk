@@ -18,9 +18,6 @@ Section:NewButton("all game remote/ريمونت يستخدم ل اخذ ادوا�
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
 end)
 
-Section:NewButton("infinity yield/ادمن", "infinity yield", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
-end)
 
 Section:NewButton("bang/بانق", "sus", function()
 loadstring(game:HttpGet("https://luascript-on.vercel.app/raw/d997c49d-b187-4cb4-ad29-aab0495251c3"))()
@@ -52,9 +49,6 @@ Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/123-User-123/ok13Obfsc/refs/heads/main/obfuscated_script-1776189673820.lua.txt"))() 
 end)
 
-Section:NewButton("admin cmd/ادمن", "idk", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-40K-EMOTES-KEYLESS-170200"))()
-end)
 
 Section:NewButton("loopfling/فنق سريع في فنق كل", "idk", function()
 --[[
@@ -75,9 +69,6 @@ Section:NewButton("tiger hub/تايكر سكربت", "ButtonInfo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/balintTheDevX/Tiger-X-V3/main/Tiger%20X%20V3.5%20Fixed"))()
 end)
 
-Section:NewButton("admin/ادمن", "idk", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NotAtomz/Atom-Scripts/refs/heads/main/Axiom_Admin_Public_Build"))()
-end)
 
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
@@ -153,4 +144,19 @@ Section:NewButton("animation r6 r15/انميشن", "ButtonInfo", function()
 ]]
 -- this script was brought to you by discord.gg/25ms
 loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua")()
+end)
+
+local Tab = Window:NewTab("admin")
+local Section = Tab:NewSection("scripts")
+
+Section:NewButton("infinity yield/ادمن", "infinity yield", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
+end)
+
+Section:NewButton("admin cmd/ادمن", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-40K-EMOTES-KEYLESS-170200"))()
+end)
+
+Section:NewButton("admin/ادمن", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NotAtomz/Atom-Scripts/refs/heads/main/Axiom_Admin_Public_Build"))()
 end)
