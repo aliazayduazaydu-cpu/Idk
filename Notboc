@@ -73,6 +73,10 @@ Section:NewButton("esp by me/كشف لاعبين من صنعي", "idk", function
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Emote/refs/heads/main/README.md"))() 
 end)
 
+Section:NewButton("aimbot/ايم بوت", "ButtonInfo", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-aimbot-script-224211"))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
