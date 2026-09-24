@@ -8,10 +8,6 @@ Section:NewButton("wallhop/ول هوب", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-V3-46344"))()
 end)
 
-Section:NewButton("hitbox/ضرب عن بعد", "idk", function()
-loadstring(game:HttpGet("https://pastebin.com/raw/XxWj2B1j"))()
-end)
-
 
 Section:NewButton("invisible/اختفاء", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
