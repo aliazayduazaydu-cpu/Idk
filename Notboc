@@ -1,31 +1,8 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("Roblox random scripts", "Ocean")
 
-
-local Tab = Window:NewTab("scripts")
+local Tab = Window:NewTab("player")
 local Section = Tab:NewSection("script")
-
-
-Section:NewButton("admin fly/ادمن طيران", "fly", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
-end)
-
-Section:NewButton("jerk/عاده سريه", "why", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Jerk-off-script-OG-245780"))()
-end)
-
-Section:NewButton("all game remote/ريمونت يستخدم ل اخذ ادوات", "idk", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
-end)
-
-
-Section:NewButton("bang/بانق", "sus", function()
-loadstring(game:HttpGet("https://luascript-on.vercel.app/raw/d997c49d-b187-4cb4-ad29-aab0495251c3"))()
-end)
-
-Section:NewButton("invisible/اختفاء", "idk", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
-end)
 
 Section:NewButton("wallhop/ول هوب", "idk", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Wallhop-V3-46344"))()
@@ -35,8 +12,33 @@ Section:NewButton("hitbox/ضرب عن بعد", "idk", function()
 loadstring(game:HttpGet("https://pastebin.com/raw/XxWj2B1j"))()
 end)
 
+
+Section:NewButton("invisible/اختفاء", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-no-key-243712"))()
+end)
+
+
+Section:NewButton("hitbox/ضرب عن بعد", "idk", function()
+loadstring(game:HttpGet("https://pastebin.com/raw/XxWj2B1j"))()
+end)
+
+Section:NewButton("esp by me/كشف لاعبين من صنعي", "idk", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Emote/refs/heads/main/README.md"))() 
+end)
+
+Section:NewButton("aimbot/ايم بوت", "ButtonInfo", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-aimbot-script-224211"))()
+end)
+
+Section:NewButton("bang/بانق", "sus", function()
+loadstring(game:HttpGet("https://luascript-on.vercel.app/raw/d997c49d-b187-4cb4-ad29-aab0495251c3"))()
+end)
+
+local Tab = Window:NewTab("scripts")
+local Section = Tab:NewSection("script")
+
 Section:NewButton("npc control/تحكم ب بوتات", "idk", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-source/refs/heads/main/NPC/source/main.Luau"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-soend)urce/refs/heads/main/NPC/source/main.Luau"))()
 end)
 
 Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
@@ -67,14 +69,6 @@ end)
 
 Section:NewButton("tiger hub/تايكر سكربت", "ButtonInfo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/balintTheDevX/Tiger-X-V3/main/Tiger%20X%20V3.5%20Fixed"))()
-end)
-
-Section:NewButton("esp by me/كشف لاعبين من صنعي", "idk", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Emote/refs/heads/main/README.md"))() 
-end)
-
-Section:NewButton("aimbot/ايم بوت", "ButtonInfo", function()
-loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-aimbot-script-224211"))()
 end)
 
 local Tab = Window:NewTab("game scripts")
@@ -153,6 +147,11 @@ Section:NewButton("animation r6 r15/انميشن", "ButtonInfo", function()
 loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua")()
 end)
 
+
+Section:NewButton("jerk/عاده سريه", "why", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Jerk-off-script-OG-245780"))()
+end)
+
 local Tab = Window:NewTab("admin")
 local Section = Tab:NewSection("scripts")
 
@@ -166,4 +165,12 @@ end)
 
 Section:NewButton("admin/ادمن", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/NotAtomz/Atom-Scripts/refs/heads/main/Axiom_Admin_Public_Build"))()
+end)
+
+Section:NewButton("admin fly/ادمن طيران", "fly", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
+end)
+
+Section:NewButton("all game remote/ريمونت يستخدم ل اخذ ادوات", "idk", function()
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
 end)
