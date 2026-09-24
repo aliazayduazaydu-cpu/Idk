@@ -98,6 +98,13 @@ Section:NewButton("Brookhaven 2/ماب بيوت", "ButtonInfo", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Brookhaven-RP-The-Darkones-Brookh4ven-Gui-16280"))()
 end)
 
+Section:NewButton("ride pet/ركوب حيوانات", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/jr0nzz/zanjihub/refs/heads/main/loader.lua"))()
+end)
+
 local Tab = Window:NewTab("animation")
 local Section = Tab:NewSection("script")
 
