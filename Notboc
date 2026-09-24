@@ -37,8 +37,8 @@ end)
 local Tab = Window:NewTab("scripts")
 local Section = Tab:NewSection("script")
 
-Section:NewButton("npc control/تحكم ب بوتات", "idk", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-soend)urce/refs/heads/main/NPC/source/main.Luau"))()
+Section:NewButton("control NPC/تحكم ب بوتات", "ButtonInfo", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-source/refs/heads/main/NPC/source/main.Luau"))()
 end)
 
 Section:NewButton("ok-13/سكربت عشوائي", "gui", function()
