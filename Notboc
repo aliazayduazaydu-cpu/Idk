@@ -67,8 +67,15 @@ Section:NewButton("tiger hub/تايكر سكربت", "ButtonInfo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/balintTheDevX/Tiger-X-V3/main/Tiger%20X%20V3.5%20Fixed"))()
 end)
 
-Section:NewButton("control tools/تحكم ب ادوات", "ButtonInfo", function()
+Section:NewButton("control tools/تحكم ب ادوات", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fetoolorbit/refs/heads/main/Fe"))()
+end)
+
+Section:NewButton("synapse x/سكربت يفيدك ل صنع سكربتات", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sigmareallybro/Synapse-X-GUI/main/script.lua"))()
 end)
 
 local Tab = Window:NewTab("game scripts")
