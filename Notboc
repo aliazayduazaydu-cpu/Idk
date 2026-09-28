@@ -1,5 +1,5 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("Roblox random scripts", "Ocean")
+local Window = Library.CreateLib("gtf / Roblox random scripts", "Ocean")
 
 local Tab = Window:NewTab("player")
 local Section = Tab:NewSection("script")
