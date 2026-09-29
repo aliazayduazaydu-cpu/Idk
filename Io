@@ -14,7 +14,7 @@ local OpenImage = "rbxassetid://88867907243603"
 local ButtonImage = "rbxassetid://8732036565"
 
 --// الصوت
-local ClickSoundId = "rbxassetid://119447356569253"
+local ClickSoundId = "rbxassetid://138567614125924"
 
 --// حذف القائمة القديمة
 local OldGui = PlayerGui:FindFirstChild("MyMobileMenu")
