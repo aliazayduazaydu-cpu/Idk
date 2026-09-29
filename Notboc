@@ -82,7 +82,7 @@ Section:NewButton("float/مشي على سماء", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/refs/heads/main/Float"))()
 end)
 
-Section:NewButton("toolgiver", "idk", function()
+Section:NewButton("toolgiver/اخذ ادوات لاعبين", "idk", function()
 --[[
 	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
 ]]
