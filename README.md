@@ -89,7 +89,7 @@ Title.Parent = Frame
 Title.Size = UDim2.new(1,-70,0,42)
 Title.Position = UDim2.new(0,15,0,5)
 Title.BackgroundTransparency = 1
-Title.Text = "hdhjjlawe"
+Title.Text = "صانع سكربت اصطوره hdhjjlawe"
 Title.TextColor3 = Color3.fromRGB(255,255,255)
 Title.TextSize = 22
 Title.Font = Enum.Font.GothamBold
@@ -219,7 +219,7 @@ end
 
 -- ===== سكربت 14 =====
 ScriptSlots[14] = function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fe-source/refs/heads/main/NPC/source/main.Luau"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fesource/refs/heads/main/NPC/source/main.Luau"))()
 end
 
 -- ===== سكربت 15 =====
@@ -259,7 +259,23 @@ for i = 1,6 do
 	Label.Position = UDim2.new(0,3,1,-32)
 	Label.BackgroundColor3 = Color3.fromRGB(0,0,0)
 	Label.BackgroundTransparency = 0.2
-	Label.Text = "سكربت 1"
+	local ScriptNames = {
+	"كشف لاعبين",
+	"فندق",
+	"ايم بوت",
+	"ادمن Infinity",
+	"برمجة X",
+	"طيران",
+	"جميع Remote",
+	"ادمن",
+	"R15 انميشن",
+	"رقصات R15",
+	"أدوات تحريك",
+	"أخذ أدوات",
+	"فندق",
+	"تحكم أعداء",
+	"ايم بوت"
+}
 	Label.TextColor3 = Color3.fromRGB(255,255,255)
 	Label.TextSize = 13
 	Label.Font = Enum.Font.GothamBold
