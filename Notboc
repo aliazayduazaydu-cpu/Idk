@@ -82,6 +82,17 @@ Section:NewButton("float/مشي على سماء", "idk", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/refs/heads/main/Float"))()
 end)
 
+Section:NewButton("toolgiver", "idk", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+-- Original code from: https://scriptblox.com/script/Universal-Script-workspace-tool-giver-ui-12089
+
+-- Edited by EvilDragon
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
+end)
+
 local Tab = Window:NewTab("game scripts")
 local Section = Tab:NewSection("script")
 
