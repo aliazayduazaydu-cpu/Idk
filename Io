@@ -1,0 +1,601 @@
+--// =========================================
+--// hdhjjlawe SCRIPT MENU
+--// 15 SLOTS / 3 PAGES
+--// =========================================
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+--// الصور
+local OpenImage = "rbxassetid://88867907243603"
+local ButtonImage = "rbxassetid://8732036565"
+
+--// الصوت
+local ClickSoundId = "rbxassetid://139219844119994"
+
+--// حذف القائمة القديمة
+local OldGui = PlayerGui:FindFirstChild("MyMobileMenu")
+if OldGui then
+	OldGui:Destroy()
+end
+
+--// =========================================
+--// GUI
+--// =========================================
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "MyMobileMenu"
+Gui.ResetOnSpawn = false
+Gui.Parent = PlayerGui
+
+--// =========================================
+--// زر فتح / غلق
+--// =========================================
+
+local OpenButton = Instance.new("ImageButton")
+OpenButton.Name = "OpenButton"
+OpenButton.Parent = Gui
+OpenButton.Size = UDim2.new(0,55,0,55)
+OpenButton.Position = UDim2.new(0,20,0.5,-27)
+OpenButton.BackgroundColor3 = Color3.fromRGB(25,25,25)
+OpenButton.Image = OpenImage
+OpenButton.ScaleType = Enum.ScaleType.Fit
+
+local OpenCorner = Instance.new("UICorner")
+OpenCorner.CornerRadius = UDim.new(0,12)
+OpenCorner.Parent = OpenButton
+
+local OpenStroke = Instance.new("UIStroke")
+OpenStroke.Thickness = 2
+OpenStroke.Color = Color3.fromRGB(70,70,70)
+OpenStroke.Parent = OpenButton
+
+local OpenSound = Instance.new("Sound")
+OpenSound.SoundId = ClickSoundId
+OpenSound.Volume = 1
+OpenSound.Parent = OpenButton
+
+--// =========================================
+--// القائمة
+--// =========================================
+
+local Frame = Instance.new("Frame")
+Frame.Name = "MainMenu"
+Frame.Parent = Gui
+Frame.Size = UDim2.new(0,350,0,470)
+Frame.Position = UDim2.new(0.5,-175,0.5,-235)
+Frame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+Frame.BackgroundTransparency = 0.03
+Frame.Visible = false
+
+local FrameCorner = Instance.new("UICorner")
+FrameCorner.CornerRadius = UDim.new(0,16)
+FrameCorner.Parent = Frame
+
+local FrameStroke = Instance.new("UIStroke")
+FrameStroke.Thickness = 2
+FrameStroke.Color = Color3.fromRGB(70,70,70)
+FrameStroke.Parent = Frame
+
+--// =========================================
+--// العنوان
+--// =========================================
+
+local Title = Instance.new("TextLabel")
+Title.Parent = Frame
+Title.Size = UDim2.new(1,-70,0,42)
+Title.Position = UDim2.new(0,15,0,5)
+Title.BackgroundTransparency = 1
+Title.Text = "صانع سكربت اصطوره hdhjjlawe"
+Title.TextColor3 = Color3.fromRGB(255,255,255)
+Title.TextSize = 22
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local PageTitle = Instance.new("TextLabel")
+PageTitle.Parent = Frame
+PageTitle.Size = UDim2.new(0,120,0,25)
+PageTitle.Position = UDim2.new(0,15,0,43)
+PageTitle.BackgroundTransparency = 1
+PageTitle.Text = "القائمة 1"
+PageTitle.TextColor3 = Color3.fromRGB(180,180,180)
+PageTitle.TextSize = 14
+PageTitle.Font = Enum.Font.Gotham
+
+--// =========================================
+--// زر X
+--// =========================================
+
+local Close = Instance.new("TextButton")
+Close.Parent = Frame
+Close.Size = UDim2.new(0,40,0,40)
+Close.Position = UDim2.new(1,-50,0,8)
+Close.BackgroundColor3 = Color3.fromRGB(180,35,35)
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(255,255,255)
+Close.TextSize = 20
+Close.Font = Enum.Font.GothamBold
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0,10)
+CloseCorner.Parent = Close
+
+local CloseSound = Instance.new("Sound")
+CloseSound.SoundId = ClickSoundId
+CloseSound.Volume = 1
+CloseSound.Parent = Close
+
+--// =========================================
+--// منطقة الأزرار
+--// =========================================
+
+local ButtonsFrame = Instance.new("Frame")
+ButtonsFrame.Parent = Frame
+ButtonsFrame.Size = UDim2.new(1,-30,0,250)
+ButtonsFrame.Position = UDim2.new(0,15,0,72)
+ButtonsFrame.BackgroundTransparency = 1
+
+local Grid = Instance.new("UIGridLayout")
+Grid.Parent = ButtonsFrame
+Grid.CellSize = UDim2.new(0,95,0,105)
+Grid.CellPadding = UDim2.new(0,12,0,10)
+Grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
+Grid.VerticalAlignment = Enum.VerticalAlignment.Top
+
+--// =========================================
+--// أسماء الـ 15 خانة
+--// =========================================
+
+local ScriptNames = {
+	"كشف لاعبين",
+	"فندق",
+	"ايم بوت",
+	"ادمن Infinity",
+	"برمجة X",
+	"طيران",
+	"جميع Remote",
+	"ادمن",
+	"R15 انميشن",
+	"رقصات R15",
+	"أدوات تحريك",
+	"أخذ أدوات",
+	"فندق",
+	"تحكم أعداء",
+	"ايم بوت"
+}
+
+--// =========================================
+--// أماكن الأكواد
+--// =========================================
+local ScriptSlots = {}
+
+-- ===== سكربت 1 =====
+ScriptSlots[1] = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Emote/refs/heads/main/README.md"))()
+end
+-- ===== سكربت 2 =====
+ScriptSlots[2] = function()
+	loadstring(game:HttpGet("https://pastebin.com/raw/XxWj2B1j"))()
+end
+
+-- ===== سكربت 3 =====
+ScriptSlots[3] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-aimbot-script-224211"))()
+end
+
+-- ===== سكربت 4 =====
+ScriptSlots[4] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
+end
+
+-- ===== سكربت 5 =====
+ScriptSlots[5] = function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/sigmareallybro/Synapse-X-GUI/main/script.lua"))()
+end
+
+-- ===== سكربت 6 =====
+ScriptSlots[6] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-HD-Admin-Fly-old-version-239307"))()
+end
+
+-- ===== سكربت 7 =====
+ScriptSlots[7] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RSPY-DFG-224310"))()
+end
+
+-- ===== سكربت 8 =====
+ScriptSlots[8] = function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/NotAtomz/AtomScripts/refs/heads/main/Axiom_Admin_Public_Build"))()
+end
+
+-- ===== سكربت 9 =====
+ScriptSlots[9] = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/M1ZZ001/R4DRevamp/refs/heads/main/Official%20R4D%20Revamp"))()
+end
+
+-- ===== سكربت 10 =====
+ScriptSlots[10] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emote-Script-48024"))()
+end
+
+-- ===== سكربت 11 =====
+ScriptSlots[11] = function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fetoolorbit/refs/heads/main/Fe"))()
+end
+
+-- ===== سكربت 12 =====
+ScriptSlots[12] = function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
+end
+
+-- ===== سكربت 13 =====
+ScriptSlots[13] = function()
+	loadstring(game:HttpGet('https://pastebin.com/raw/BTeNp4e7'))()
+end
+
+-- ===== سكربت 14 =====
+ScriptSlots[14] = function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/fesource/refs/heads/main/NPC/source/main.Luau"))()
+end
+
+-- ===== سكربت 15 =====
+ScriptSlots[15] = function()
+	loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-aimbot-script-224211"))()
+end
+
+
+--// =========================================
+--// إنشاء الأزرار
+--// =========================================
+
+local Buttons = {}
+
+for i = 1,6 do
+
+	local Button = Instance.new("ImageButton")
+	Button.Name = "ScriptSlot"..i
+	Button.Parent = ButtonsFrame
+	Button.BackgroundColor3 = Color3.fromRGB(35,35,35)
+	Button.Image = ButtonImage
+	Button.ScaleType = Enum.ScaleType.Fit
+	Button.AutoButtonColor = true
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(0,13)
+	Corner.Parent = Button
+
+	local Stroke = Instance.new("UIStroke")
+	Stroke.Thickness = 2
+	Stroke.Color = Color3.fromRGB(70,70,70)
+	Stroke.Parent = Button
+
+	local Label = Instance.new("TextLabel")
+	Label.Name = "Name"
+	Label.Parent = Button
+	Label.Size = UDim2.new(1,-6,0,29)
+	Label.Position = UDim2.new(0,3,1,-32)
+	Label.BackgroundColor3 = Color3.fromRGB(0,0,0)
+	Label.BackgroundTransparency = 0.2
+	Label.Text = ScriptNames[i]
+	Label.TextColor3 = Color3.fromRGB(255,255,255)
+	Label.TextSize = 13
+	Label.Font = Enum.Font.GothamBold
+
+	local LabelCorner = Instance.new("UICorner")
+	LabelCorner.CornerRadius = UDim.new(0,7)
+	LabelCorner.Parent = Label
+
+	local Sound = Instance.new("Sound")
+	Sound.SoundId = ClickSoundId
+	Sound.Volume = 1
+	Sound.Parent = Button
+
+	Button.MouseButton1Click:Connect(function()
+
+		Sound:Play()
+
+		local CurrentPage = Frame:GetAttribute("CurrentPage") or 1
+		local SlotNumber = ((CurrentPage - 1) * 6) + i
+
+		if SlotNumber <= 15 then
+
+			local Success, ErrorMessage = pcall(function()
+				ScriptSlots[SlotNumber]()
+			end)
+
+			if not Success then
+				warn(
+					"خطأ في الخانة "
+					..SlotNumber
+					..": "
+					..tostring(ErrorMessage)
+				)
+			end
+		end
+	end)
+
+	Buttons[i] = {
+		Button = Button,
+		Label = Label
+	}
+end
+
+--// =========================================
+--// أزرار الصفحات
+--// =========================================
+
+local PageButtons = {}
+
+local PagesFrame = Instance.new("Frame")
+PagesFrame.Parent = Frame
+PagesFrame.Size = UDim2.new(1,-30,0,42)
+PagesFrame.Position = UDim2.new(0,15,0,330)
+PagesFrame.BackgroundTransparency = 1
+
+local PageLayout = Instance.new("UIListLayout")
+PageLayout.Parent = PagesFrame
+PageLayout.FillDirection = Enum.FillDirection.Horizontal
+PageLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+PageLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+PageLayout.Padding = UDim.new(0,8)
+
+--// =========================================
+--// تغيير الصفحة
+--// =========================================
+
+local function ChangePage(Page)
+
+	Frame:SetAttribute("CurrentPage",Page)
+	PageTitle.Text = "القائمة "..Page
+
+	for i = 1,6 do
+
+		local SlotNumber = ((Page - 1) * 6) + i
+
+		if SlotNumber <= 15 then
+			Buttons[i].Button.Visible = true
+			Buttons[i].Label.Text = ScriptNames[SlotNumber]
+		else
+			Buttons[i].Button.Visible = false
+		end
+	end
+
+	for PageNumber, PageButton in pairs(PageButtons) do
+
+		if PageNumber == Page then
+			PageButton.BackgroundColor3 =
+				Color3.fromRGB(60,120,220)
+		else
+			PageButton.BackgroundColor3 =
+				Color3.fromRGB(40,40,40)
+		end
+	end
+end
+
+--// =========================================
+--// إنشاء أرقام الصفحات
+--// =========================================
+
+for Page = 1,3 do
+
+	local PageButton = Instance.new("TextButton")
+	PageButton.Name = "Page"..Page
+	PageButton.Parent = PagesFrame
+	PageButton.Size = UDim2.new(0,42,0,36)
+	PageButton.BackgroundColor3 = Color3.fromRGB(40,40,40)
+	PageButton.Text = tostring(Page)
+	PageButton.TextColor3 = Color3.fromRGB(255,255,255)
+	PageButton.TextSize = 15
+	PageButton.Font = Enum.Font.GothamBold
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(0,9)
+	Corner.Parent = PageButton
+
+	local Stroke = Instance.new("UIStroke")
+	Stroke.Thickness = 1
+	Stroke.Color = Color3.fromRGB(75,75,75)
+	Stroke.Parent = PageButton
+
+	local Sound = Instance.new("Sound")
+	Sound.SoundId = ClickSoundId
+	Sound.Volume = 1
+	Sound.Parent = PageButton
+
+	PageButtons[Page] = PageButton
+
+	PageButton.MouseButton1Click:Connect(function()
+		Sound:Play()
+		ChangePage(Page)
+	end)
+end
+
+--// =========================================
+--// سرعة 100
+--// =========================================
+
+local SpeedButton = Instance.new("TextButton")
+SpeedButton.Parent = Frame
+SpeedButton.Size = UDim2.new(0,145,0,38)
+SpeedButton.Position = UDim2.new(0,20,1,-55)
+SpeedButton.BackgroundColor3 = Color3.fromRGB(35,130,65)
+SpeedButton.Text = "سرعة 100"
+SpeedButton.TextColor3 = Color3.fromRGB(255,255,255)
+SpeedButton.TextSize = 15
+SpeedButton.Font = Enum.Font.GothamBold
+
+local SpeedCorner = Instance.new("UICorner")
+SpeedCorner.CornerRadius = UDim.new(0,10)
+SpeedCorner.Parent = SpeedButton
+
+local SpeedSound = Instance.new("Sound")
+SpeedSound.SoundId = ClickSoundId
+SpeedSound.Volume = 1
+SpeedSound.Parent = SpeedButton
+
+SpeedButton.MouseButton1Click:Connect(function()
+
+	SpeedSound:Play()
+
+	local Character =
+		Player.Character or Player.CharacterAdded:Wait()
+
+	local Humanoid =
+		Character:WaitForChild("Humanoid")
+
+	Humanoid.WalkSpeed = 100
+end)
+
+--// =========================================
+--// قفز 150
+--// =========================================
+
+local JumpButton = Instance.new("TextButton")
+JumpButton.Parent = Frame
+JumpButton.Size = UDim2.new(0,145,0,38)
+JumpButton.Position = UDim2.new(1,-165,1,-55)
+JumpButton.BackgroundColor3 = Color3.fromRGB(55,100,180)
+JumpButton.Text = "قفز 150"
+JumpButton.TextColor3 = Color3.fromRGB(255,255,255)
+JumpButton.TextSize = 15
+JumpButton.Font = Enum.Font.GothamBold
+
+local JumpCorner = Instance.new("UICorner")
+JumpCorner.CornerRadius = UDim.new(0,10)
+JumpCorner.Parent = JumpButton
+
+local JumpSound = Instance.new("Sound")
+JumpSound.SoundId = ClickSoundId
+JumpSound.Volume = 1
+JumpSound.Parent = JumpButton
+
+JumpButton.MouseButton1Click:Connect(function()
+
+	JumpSound:Play()
+
+	local Character =
+		Player.Character or Player.CharacterAdded:Wait()
+
+	local Humanoid =
+		Character:WaitForChild("Humanoid")
+
+	Humanoid.UseJumpPower = true
+	Humanoid.JumpPower = 150
+end)
+
+--// =========================================
+--// فتح / غلق
+--// =========================================
+
+OpenButton.MouseButton1Click:Connect(function()
+
+	OpenSound:Play()
+	Frame.Visible = not Frame.Visible
+end)
+
+Close.MouseButton1Click:Connect(function()
+
+	CloseSound:Play()
+	Frame.Visible = false
+end)
+
+--// =========================================
+--// تحريك القائمة
+--// =========================================
+
+local MovingFrame = false
+local FrameStart
+local TouchStart
+
+Frame.InputBegan:Connect(function(Input)
+
+	if Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		MovingFrame = true
+		TouchStart = Input.Position
+		FrameStart = Frame.Position
+	end
+end)
+
+Frame.InputEnded:Connect(function(Input)
+
+	if Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		MovingFrame = false
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(Input)
+
+	if MovingFrame and (
+		Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseMovement
+	) then
+
+		local Delta = Input.Position - TouchStart
+
+		Frame.Position = UDim2.new(
+			FrameStart.X.Scale,
+			FrameStart.X.Offset + Delta.X,
+			FrameStart.Y.Scale,
+			FrameStart.Y.Offset + Delta.Y
+		)
+	end
+end)
+
+--// =========================================
+--// تحريك زر الفتح
+--// =========================================
+
+local MovingButton = false
+local ButtonStart
+local ButtonTouchStart
+
+OpenButton.InputBegan:Connect(function(Input)
+
+	if Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		MovingButton = true
+		ButtonTouchStart = Input.Position
+		ButtonStart = OpenButton.Position
+	end
+end)
+
+OpenButton.InputEnded:Connect(function(Input)
+
+	if Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+		MovingButton = false
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(Input)
+
+	if MovingButton and (
+		Input.UserInputType == Enum.UserInputType.Touch
+		or Input.UserInputType == Enum.UserInputType.MouseMovement
+	) then
+
+		local Delta = Input.Position - ButtonTouchStart
+
+		OpenButton.Position = UDim2.new(
+			ButtonStart.X.Scale,
+			ButtonStart.X.Offset + Delta.X,
+			ButtonStart.Y.Scale,
+			ButtonStart.Y.Offset + Delta.Y
+		)
+	end
+end)
+
+--// =========================================
+--// الصفحة الأولى
+--// =========================================
+
+ChangePage(1)
