@@ -151,7 +151,7 @@ Grid.VerticalAlignment = Enum.VerticalAlignment.Top
 
 local ScriptNames = {
 	"كشف لاعبين",
-	"فندق",
+	"فناق",
 	"ايم بوت",
 	"ادمن Infinity",
 	"برمجة X",
@@ -162,7 +162,7 @@ local ScriptNames = {
 	"رقصات R15",
 	"أدوات تحريك",
 	"أخذ أدوات",
-	"فندق",
+	"عشوائيات",
 	"تحكم أعداء",
 	"ايم بوت"
 }
@@ -233,7 +233,7 @@ end
 
 -- ===== سكربت 13 =====
 ScriptSlots[13] = function()
-	loadstring(game:HttpGet('https://pastebin.com/raw/BTeNp4e7'))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Mkol"))()
 end
 
 -- ===== سكربت 14 =====
