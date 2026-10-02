@@ -1,6 +1,13 @@
 --// =========================================================
 --// RANDOM DISASTER
---// RIGHT SIDE TIMER + DANCE
+--// =========================================================
+--// كارثة كل 30 ثانية
+--// مدة الكارثة 60 ثانية
+--// أقصى 3 كوارث
+--// النص فقط في وسط يمين الشاشة
+--// بدون دوران
+--// إخفاء الماب بنسبة 0.8
+--// التأثيرات تستمر بعد الموت والـRespawn
 --// =========================================================
 
 local Players = game:GetService("Players")
@@ -13,11 +20,15 @@ local PlayerGui = Player:WaitForChild("PlayerGui")
 -- SETTINGS
 --============================================================
 
-local WAIT_TIME = 40
+local SPAWN_TIME = 30
+local DISASTER_TIME = 60
+local MAX_DISASTERS = 3
 
 local NORMAL_SPEED = 16
 local NORMAL_JUMP = 50
 local NORMAL_GRAVITY = 196.2
+
+local MAP_TRANSPARENCY = 0.8
 
 local SpeedValues = {
 	1, 50, 100, 200, 300,
@@ -42,17 +53,28 @@ local Humanoid
 local RootPart
 
 local function UpdateCharacter()
-	Character = Player.Character or Player.CharacterAdded:Wait()
-	Humanoid = Character:WaitForChild("Humanoid")
-	RootPart = Character:WaitForChild("HumanoidRootPart")
+
+	Character =
+		Player.Character
+		or Player.CharacterAdded:Wait()
+
+	Humanoid =
+		Character:WaitForChild("Humanoid")
+
+	RootPart =
+		Character:WaitForChild("HumanoidRootPart")
+
 end
 
 UpdateCharacter()
 
-Player.CharacterAdded:Connect(function()
-	task.wait(1)
-	UpdateCharacter()
-end)
+--============================================================
+-- ACTIVE DISASTERS
+--============================================================
+
+local ActiveDisasters = {}
+
+local DisasterID = 0
 
 --============================================================
 -- GUI
@@ -64,276 +86,394 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.Parent = PlayerGui
 
-local MainFrame = Instance.new("Frame")
-MainFrame.Name = "RightTimer"
-MainFrame.Size = UDim2.new(0, 245, 0, 72)
-MainFrame.Position = UDim2.new(1, -255, 1, -115)
-MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-MainFrame.BackgroundTransparency = 0.08
-MainFrame.BorderSizePixel = 0
-MainFrame.Parent = ScreenGui
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 12)
-Corner.Parent = MainFrame
-
-local Stroke = Instance.new("UIStroke")
-Stroke.Thickness = 1.5
-Stroke.Color = Color3.fromRGB(70, 70, 70)
-Stroke.Parent = MainFrame
-
 --============================================================
--- DISASTER NAME
+-- TOP TIMER
 --============================================================
 
-local DisasterText = Instance.new("TextLabel")
-DisasterText.Name = "Disaster"
-DisasterText.Size = UDim2.new(1, -16, 0, 25)
-DisasterText.Position = UDim2.new(0, 8, 0, 4)
-DisasterText.BackgroundTransparency = 1
-DisasterText.Text = "⏳ الكارثة القادمة"
-DisasterText.TextColor3 = Color3.fromRGB(255, 255, 255)
-DisasterText.TextSize = 15
-DisasterText.Font = Enum.Font.GothamBold
-DisasterText.TextXAlignment = Enum.TextXAlignment.Right
-DisasterText.Parent = MainFrame
+local TopTimer = Instance.new("TextLabel")
+
+TopTimer.Name = "NextDisasterTimer"
+
+TopTimer.AnchorPoint =
+	Vector2.new(0.5, 0)
+
+TopTimer.Position =
+	UDim2.new(0.5, 0, 0, 8)
+
+TopTimer.Size =
+	UDim2.new(0.92, 0, 0, 25)
+
+TopTimer.BackgroundTransparency = 1
+
+TopTimer.Text = "30.0"
+
+TopTimer.TextColor3 =
+	Color3.new(1, 1, 1)
+
+TopTimer.TextSize = 18
+
+TopTimer.Font =
+	Enum.Font.GothamBold
+
+TopTimer.TextXAlignment =
+	Enum.TextXAlignment.Center
+
+TopTimer.TextYAlignment =
+	Enum.TextYAlignment.Center
+
+TopTimer.Parent = ScreenGui
 
 --============================================================
--- BAR BACK
+-- DISASTER TEXT CONTAINER
 --============================================================
 
-local BarBack = Instance.new("Frame")
-BarBack.Name = "BarBack"
-BarBack.Size = UDim2.new(1, -16, 0, 16)
-BarBack.Position = UDim2.new(0, 8, 0, 31)
-BarBack.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
-BarBack.BorderSizePixel = 0
-BarBack.Parent = MainFrame
+local DisasterContainer = Instance.new("Frame")
 
-local BarCorner = Instance.new("UICorner")
-BarCorner.CornerRadius = UDim.new(1, 0)
-BarCorner.Parent = BarBack
+DisasterContainer.Name =
+	"DisasterTextContainer"
 
---============================================================
--- RAINBOW BAR
---============================================================
+DisasterContainer.AnchorPoint =
+	Vector2.new(1, 0.5)
 
-local Bar = Instance.new("Frame")
-Bar.Name = "RainbowBar"
-Bar.Size = UDim2.new(1, 0, 1, 0)
-Bar.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-Bar.BorderSizePixel = 0
-Bar.Parent = BarBack
+DisasterContainer.Position =
+	UDim2.new(1, -12, 0.5, 0)
 
-local BarCorner2 = Instance.new("UICorner")
-BarCorner2.CornerRadius = UDim.new(1, 0)
-BarCorner2.Parent = Bar
+DisasterContainer.Size =
+	UDim2.new(0, 230, 0, 200)
 
---============================================================
--- TIMER TEXT
---============================================================
+DisasterContainer.BackgroundTransparency = 1
 
-local TimerText = Instance.new("TextLabel")
-TimerText.Name = "Timer"
-TimerText.Size = UDim2.new(1, 0, 1, 0)
-TimerText.BackgroundTransparency = 1
-TimerText.Text = "40"
-TimerText.TextColor3 = Color3.fromRGB(255, 255, 255)
-TimerText.TextSize = 13
-TimerText.Font = Enum.Font.GothamBold
-TimerText.TextXAlignment = Enum.TextXAlignment.Center
-TimerText.TextYAlignment = Enum.TextYAlignment.Center
-TimerText.ZIndex = 5
-TimerText.Parent = BarBack
+DisasterContainer.Parent = ScreenGui
+
+local List = Instance.new("UIListLayout")
+
+List.FillDirection =
+	Enum.FillDirection.Vertical
+
+List.HorizontalAlignment =
+	Enum.HorizontalAlignment.Right
+
+List.VerticalAlignment =
+	Enum.VerticalAlignment.Center
+
+List.Padding =
+	UDim.new(0, 3)
+
+List.SortOrder =
+	Enum.SortOrder.LayoutOrder
+
+List.Parent = DisasterContainer
 
 --============================================================
--- RAINBOW EFFECT
+-- RAINBOW
 --============================================================
 
-RunService.RenderStepped:Connect(function()
-	if Bar and Bar.Parent then
-		local Hue = (tick() * 0.25) % 1
-		Bar.BackgroundColor3 = Color3.fromHSV(Hue, 1, 1)
-	end
-end)
+local function RainbowColor(Offset)
 
---============================================================
--- SPIN
---============================================================
+	local Hue =
+		(tick() * 0.25 + Offset) % 1
 
-local SpinConnection
+	return Color3.fromHSV(
+		Hue,
+		1,
+		1
+	)
 
-local function StopSpin()
-	if SpinConnection then
-		SpinConnection:Disconnect()
-		SpinConnection = nil
-	end
-
-	if Humanoid then
-		Humanoid.AutoRotate = true
-	end
 end
 
-local function StartSpin(Speed)
-	StopSpin()
+--============================================================
+-- CREATE DISASTER TEXT
+--============================================================
 
-	if not RootPart or not Humanoid then
+local function CreateDisasterText(Disaster)
+
+	local Text = Instance.new("TextLabel")
+
+	Text.Name =
+		"Disaster_" .. Disaster.ID
+
+	Text.Size =
+		UDim2.new(1, 0, 0, 25)
+
+	Text.BackgroundTransparency = 1
+
+	Text.Text =
+		Disaster.Name ..
+		" (" ..
+		string.format(
+			"%.2f",
+			DISASTER_TIME
+		) ..
+		")"
+
+	Text.TextColor3 =
+		Color3.new(1, 1, 1)
+
+	Text.TextStrokeTransparency = 0.35
+
+	Text.TextSize = 16
+
+	Text.Font =
+		Enum.Font.GothamBold
+
+	Text.TextXAlignment =
+		Enum.TextXAlignment.Right
+
+	Text.Parent =
+		DisasterContainer
+
+	Disaster.Text = Text
+
+end
+
+--============================================================
+-- MAP HIDE
+--============================================================
+
+local HiddenParts = {}
+
+local function HideMapPart(Part)
+
+	if not Part:IsA("BasePart") then
 		return
 	end
 
-	Humanoid.AutoRotate = false
+	-- لا نخفي شخصية اللاعب
+	if Character and Part:IsDescendantOf(Character) then
+		return
+	end
 
-	local RotationSpeed = math.rad(Speed)
+	-- لا نخفي شخصيات اللاعبين
+	for _, OtherPlayer in
+		ipairs(Players:GetPlayers()) do
 
-	SpinConnection = RunService.RenderStepped:Connect(function(dt)
-		if not RootPart or not RootPart.Parent then
-			StopSpin()
+		if OtherPlayer.Character
+			and Part:IsDescendantOf(
+				OtherPlayer.Character
+			) then
+
 			return
 		end
 
-		RootPart.CFrame =
-			RootPart.CFrame *
-			CFrame.Angles(0, RotationSpeed * dt, 0)
-	end)
-end
-
---============================================================
--- DANCE
---============================================================
-
-local DanceTrack = nil
-
-local DanceEmotes = {
-	"dance",
-	"dance2",
-	"dance3"
-}
-
-local function StopDance()
-	if DanceTrack then
-		pcall(function()
-			DanceTrack:Stop(0.15)
-		end)
-
-		DanceTrack = nil
 	end
+
+	if HiddenParts[Part] == nil then
+
+		HiddenParts[Part] =
+			Part.LocalTransparencyModifier
+
+	end
+
+	Part.LocalTransparencyModifier =
+		MAP_TRANSPARENCY
+
 end
 
-local function StartDance()
-	StopDance()
+local function HideMap()
+
+	for _, Object in
+		ipairs(workspace:GetDescendants()) do
+
+		HideMapPart(Object)
+
+	end
+
+end
+
+local function RestoreMap()
+
+	for Part, OldValue in
+		pairs(HiddenParts) do
+
+		if Part
+			and Part.Parent then
+
+			Part.LocalTransparencyModifier =
+				OldValue
+
+		end
+
+	end
+
+	table.clear(HiddenParts)
+
+end
+
+--============================================================
+-- BASIC RESET
+--============================================================
+
+local function ResetProperties()
+
+	UpdateCharacter()
+
+	if Humanoid then
+
+		Humanoid.WalkSpeed =
+			NORMAL_SPEED
+
+		Humanoid.UseJumpPower =
+			true
+
+		Humanoid.JumpPower =
+			NORMAL_JUMP
+
+	end
+
+	workspace.Gravity =
+		NORMAL_GRAVITY
+
+end
+
+--============================================================
+-- APPLY ACTIVE EFFECTS
+--============================================================
+
+local function ApplyEffects()
+
 	UpdateCharacter()
 
 	if not Humanoid then
 		return
 	end
 
-	-- تجربة الرقصات الأساسية
-	local EmoteName =
-		DanceEmotes[
-			math.random(1, #DanceEmotes)
-		]
+	local SpeedValue = nil
+	local JumpValue = nil
+	local GravityValue = nil
 
-	local Success = false
+	local NoJump = false
+	local HasReverse = false
+	local HasMapHide = false
 
-	pcall(function()
-		Success = Humanoid:PlayEmote(EmoteName)
-	end)
+	for _, Disaster in
+		ipairs(ActiveDisasters) do
 
-	-- إذا اشتغل الإيموت، نحاول نخليه مستمر
-	if Success then
-		task.wait(0.15)
+		if Disaster.Type == "Speed" then
 
-		local Animator =
-			Humanoid:FindFirstChildOfClass("Animator")
+			SpeedValue =
+				Disaster.Value
 
-		if Animator then
-			local Tracks =
-				Animator:GetPlayingAnimationTracks()
+		elseif Disaster.Type == "Jump" then
 
-			for _, Track in ipairs(Tracks) do
-				if Track.IsPlaying then
-					DanceTrack = Track
+			JumpValue =
+				Disaster.Value
 
-					pcall(function()
-						Track.Looped = true
-						Track.Priority =
-							Enum.AnimationPriority.Action
-					end)
+		elseif Disaster.Type == "Gravity" then
 
-					break
-				end
-			end
+			GravityValue =
+				Disaster.Value
+
+		elseif Disaster.Type == "NoJump" then
+
+			NoJump = true
+
+		elseif Disaster.Type == "Reverse" then
+
+			HasReverse = true
+
+		elseif Disaster.Type == "MapHide" then
+
+			HasMapHide = true
+
 		end
+
 	end
+
+	--========================================================
+	-- SPEED
+	--========================================================
+
+	if SpeedValue then
+
+		Humanoid.WalkSpeed =
+			SpeedValue
+
+	else
+
+		Humanoid.WalkSpeed =
+			NORMAL_SPEED
+
+	end
+
+	--========================================================
+	-- JUMP
+	--========================================================
+
+	if NoJump then
+
+		Humanoid.UseJumpPower =
+			true
+
+		Humanoid.JumpPower =
+			0
+
+	elseif JumpValue then
+
+		Humanoid.UseJumpPower =
+			true
+
+		Humanoid.JumpPower =
+			JumpValue
+
+	else
+
+		Humanoid.UseJumpPower =
+			true
+
+		Humanoid.JumpPower =
+			NORMAL_JUMP
+
+	end
+
+	--========================================================
+	-- GRAVITY
+	--========================================================
+
+	if GravityValue ~= nil then
+
+		workspace.Gravity =
+			GravityValue
+
+	else
+
+		workspace.Gravity =
+			NORMAL_GRAVITY
+
+	end
+
+	--========================================================
+	-- MAP
+	--========================================================
+
+	if HasMapHide then
+
+		HideMap()
+
+	else
+
+		RestoreMap()
+
+	end
+
 end
 
 --============================================================
--- RESET
---============================================================
-
-local function ResetPlayer()
-	StopSpin()
-	StopDance()
-
-	if not Character or not Character.Parent then
-		UpdateCharacter()
-	end
-
-	if Humanoid then
-		Humanoid.WalkSpeed = NORMAL_SPEED
-		Humanoid.UseJumpPower = true
-		Humanoid.JumpPower = NORMAL_JUMP
-		Humanoid.AutoRotate = true
-	end
-
-	workspace.Gravity = NORMAL_GRAVITY
-
-	if RootPart then
-		RootPart.AssemblyAngularVelocity = Vector3.zero
-	end
-end
-
---============================================================
--- FLING
---============================================================
-
-local function DoFling()
-	UpdateCharacter()
-
-	if RootPart then
-		local X = math.random(-180, 180)
-		local Y = math.random(100, 180)
-		local Z = math.random(-180, 180)
-
-		RootPart.AssemblyLinearVelocity =
-			Vector3.new(X, Y, Z)
-	end
-end
-
---============================================================
--- TRIP
---============================================================
-
-local function DoTrip()
-	UpdateCharacter()
-
-	if Humanoid then
-		Humanoid:ChangeState(
-			Enum.HumanoidStateType.FallingDown
-		)
-	end
-end
-
---============================================================
--- TELEPORT RANDOM PLAYER
+-- TELEPORT
 --============================================================
 
 local function TeleportRandomPlayer()
+
 	UpdateCharacter()
+
+	if not RootPart then
+		return
+	end
 
 	local AvailablePlayers = {}
 
-	for _, OtherPlayer in ipairs(Players:GetPlayers()) do
+	for _, OtherPlayer in
+		ipairs(Players:GetPlayers()) do
+
 		if OtherPlayer ~= Player then
 
 			local OtherCharacter =
@@ -347,17 +487,22 @@ local function TeleportRandomPlayer()
 					)
 
 				if OtherRoot then
+
 					table.insert(
 						AvailablePlayers,
 						OtherPlayer
 					)
+
 				end
+
 			end
+
 		end
+
 	end
 
 	if #AvailablePlayers == 0 then
-		return "📍 لا يوجد لاعب"
+		return
 	end
 
 	local Target =
@@ -368,76 +513,148 @@ local function TeleportRandomPlayer()
 			)
 		]
 
+	local TargetCharacter =
+		Target.Character
+
+	if not TargetCharacter then
+		return
+	end
+
 	local TargetRoot =
-		Target.Character:FindFirstChild(
+		TargetCharacter:FindFirstChild(
 			"HumanoidRootPart"
 		)
 
-	if TargetRoot and RootPart then
+	if TargetRoot then
 
 		RootPart.CFrame =
 			TargetRoot.CFrame +
 			Vector3.new(0, 3, 0)
 
-		return "📍 " .. Target.DisplayName
 	end
 
-	return "📍 فشل الانتقال"
 end
 
 --============================================================
--- TIMER
+-- FLING
 --============================================================
 
-local function RunTimer(Duration)
+local function DoFling()
 
-	local StartTime = tick()
+	UpdateCharacter()
 
-	while true do
+	if RootPart then
 
-		local Elapsed =
-			tick() - StartTime
-
-		local Remaining =
-			Duration - Elapsed
-
-		if Remaining <= 0 then
-			break
-		end
-
-		TimerText.Text =
-			string.format("%.1f", Remaining)
-
-		local Percent =
-			Remaining / Duration
-
-		Bar.Size =
-			UDim2.new(
-				Percent,
-				0,
-				1,
-				0
+		RootPart.AssemblyLinearVelocity =
+			Vector3.new(
+				math.random(-180, 180),
+				math.random(100, 180),
+				math.random(-180, 180)
 			)
 
-		task.wait(0.05)
 	end
 
-	TimerText.Text = "0"
+end
 
-	Bar.Size =
-		UDim2.new(
-			1,
-			0,
-			1,
-			0
+--============================================================
+-- TRIP
+--============================================================
+
+local function DoTrip()
+
+	UpdateCharacter()
+
+	if Humanoid then
+
+		Humanoid:ChangeState(
+			Enum.HumanoidStateType.FallingDown
 		)
 
-	Bar.BackgroundColor3 =
-		Color3.fromRGB(
-			75,
-			75,
-			75
+	end
+
+end
+
+--============================================================
+-- REVERSE CONTROL
+--============================================================
+
+local function StartReverse(Disaster)
+
+	Disaster.Connection =
+		RunService.RenderStepped:Connect(
+			function()
+
+				if Disaster.Removed then
+					return
+				end
+
+				if not Humanoid then
+					return
+				end
+
+				local Direction =
+					Humanoid.MoveDirection
+
+				if Direction.Magnitude > 0.05 then
+
+					Humanoid:Move(
+						-Direction,
+						false
+					)
+
+				end
+
+			end
 		)
+
+end
+
+--============================================================
+-- REMOVE DISASTER
+--============================================================
+
+local function RemoveDisaster(Disaster)
+
+	if Disaster.Removed then
+		return
+	end
+
+	Disaster.Removed = true
+
+	if Disaster.Connection then
+
+		Disaster.Connection:Disconnect()
+
+		Disaster.Connection = nil
+
+	end
+
+	if Disaster.Text then
+
+		Disaster.Text:Destroy()
+
+	end
+
+	for i, Item in
+		ipairs(ActiveDisasters) do
+
+		if Item == Disaster then
+
+			table.remove(
+				ActiveDisasters,
+				i
+			)
+
+			break
+
+		end
+
+	end
+
+	ResetProperties()
+
+	ApplyEffects()
+
 end
 
 --============================================================
@@ -446,22 +663,19 @@ end
 
 local function GetRandomDisaster()
 
-	local Events = {
+	return {
+
 		"Speed",
 		"Jump",
 		"Gravity",
-		"Spin",
 		"FlingTrip",
 		"Teleport",
-		"Dance"
+		"Reverse",
+		"NoJump",
+		"MapHide"
+
 	}
 
-	return Events[
-		math.random(
-			1,
-			#Events
-		)
-	]
 end
 
 --============================================================
@@ -472,11 +686,49 @@ local function StartDisaster()
 
 	UpdateCharacter()
 
-	local Event =
+	-- إذا كان هناك 3 كوارث
+	-- نحذف أقدم كارثة
+	if #ActiveDisasters >= MAX_DISASTERS then
+
+		RemoveDisaster(
+			ActiveDisasters[1]
+		)
+
+	end
+
+	DisasterID += 1
+
+	local Events =
 		GetRandomDisaster()
 
-	local Duration = 30
-	local Name = ""
+	local Event =
+		Events[
+			math.random(
+				1,
+				#Events
+			)
+		]
+
+	local Disaster = {
+
+		ID = DisasterID,
+
+		Type = Event,
+
+		Started =
+			tick(),
+
+		Expires =
+			tick() +
+			DISASTER_TIME,
+
+		Removed = false,
+
+		Value = nil,
+
+		Name = "كارثة"
+
+	}
 
 	--========================================================
 	-- SPEED
@@ -484,7 +736,7 @@ local function StartDisaster()
 
 	if Event == "Speed" then
 
-		local Value =
+		Disaster.Value =
 			SpeedValues[
 				math.random(
 					1,
@@ -492,10 +744,8 @@ local function StartDisaster()
 				)
 			]
 
-		Humanoid.WalkSpeed = Value
-
-		Name =
-			"⚡ سرعة: " .. Value
+		Disaster.Name =
+			"⚡ سرعة"
 
 	--========================================================
 	-- JUMP
@@ -503,7 +753,7 @@ local function StartDisaster()
 
 	elseif Event == "Jump" then
 
-		local Value =
+		Disaster.Value =
 			JumpValues[
 				math.random(
 					1,
@@ -511,11 +761,8 @@ local function StartDisaster()
 				)
 			]
 
-		Humanoid.UseJumpPower = true
-		Humanoid.JumpPower = Value
-
-		Name =
-			"🦘 قفز: " .. Value
+		Disaster.Name =
+			"🦘 قفز"
 
 	--========================================================
 	-- GRAVITY
@@ -523,7 +770,7 @@ local function StartDisaster()
 
 	elseif Event == "Gravity" then
 
-		local Value =
+		Disaster.Value =
 			GravityValues[
 				math.random(
 					1,
@@ -531,27 +778,8 @@ local function StartDisaster()
 				)
 			]
 
-		workspace.Gravity = Value
-
-		Name =
-			"🌍 جاذبية: " .. Value
-
-	--========================================================
-	-- SPIN
-	--========================================================
-
-	elseif Event == "Spin" then
-
-		local Value =
-			math.random(
-				10,
-				50
-			)
-
-		StartSpin(Value)
-
-		Name =
-			"🌀 دوران: " .. Value
+		Disaster.Name =
+			"🌍 جاذبية"
 
 	--========================================================
 	-- FLING / TRIP
@@ -559,27 +787,20 @@ local function StartDisaster()
 
 	elseif Event == "FlingTrip" then
 
-		Duration = 5
-
-		local Choice =
-			math.random(
-				1,
-				2
-			)
-
-		if Choice == 1 then
+		if math.random(1, 2) == 1 then
 
 			DoFling()
 
-			Name =
-				"💨 Fling"
+			Disaster.Name =
+				"💨 دفع"
 
 		else
 
 			DoTrip()
 
-			Name =
-				"🦶 Trip"
+			Disaster.Name =
+				"🦶 تعثر"
+
 		end
 
 	--========================================================
@@ -588,82 +809,220 @@ local function StartDisaster()
 
 	elseif Event == "Teleport" then
 
-		Name =
-			TeleportRandomPlayer()
+		TeleportRandomPlayer()
+
+		Disaster.Name =
+			"📍 انتقال"
 
 	--========================================================
-	-- DANCE
+	-- REVERSE
 	--========================================================
 
-	elseif Event == "Dance" then
+	elseif Event == "Reverse" then
 
-		StartDance()
+		Disaster.Name =
+			"🔄 تحكم معكوس"
 
-		Name =
-			"💃 رقص"
+	--========================================================
+	-- NO JUMP
+	--========================================================
+
+	elseif Event == "NoJump" then
+
+		Disaster.Name =
+			"🚫 عدم قفز"
+
+	--========================================================
+	-- MAP HIDE
+	--========================================================
+
+	elseif Event == "MapHide" then
+
+		Disaster.Name =
+			"👁️ إخفاء الماب"
+
 	end
 
-	--========================================================
-	-- START DISASTER TIMER
-	--========================================================
+	table.insert(
+		ActiveDisasters,
+		Disaster
+	)
 
-	DisasterText.Text = Name
+	CreateDisasterText(
+		Disaster
+	)
 
-	Bar.Size =
-		UDim2.new(
-			1,
-			0,
-			1,
-			0
+	if Event == "Reverse" then
+
+		StartReverse(
+			Disaster
 		)
 
-	RunTimer(Duration)
+	end
 
-	--========================================================
-	-- RESET
-	--========================================================
+	ApplyEffects()
 
-	ResetPlayer()
-
-	DisasterText.Text =
-		"⏳ الكارثة القادمة"
-
-	Bar.Size =
-		UDim2.new(
-			1,
-			0,
-			1,
-			0
-		)
 end
 
 --============================================================
--- MAIN LOOP
+-- CHARACTER RESPAWN FIX
 --============================================================
 
-task.spawn(function()
+Player.CharacterAdded:Connect(
+	function(NewCharacter)
 
-	while true do
+		Character =
+			NewCharacter
 
-		ResetPlayer()
-
-		DisasterText.Text =
-			"⏳ الكارثة القادمة"
-
-		Bar.Size =
-			UDim2.new(
-				1,
-				0,
-				1,
-				0
+		Humanoid =
+			NewCharacter:WaitForChild(
+				"Humanoid"
 			)
 
-		-- 40 ثانية قبل الكارثة
-		RunTimer(WAIT_TIME)
+		RootPart =
+			NewCharacter:WaitForChild(
+				"HumanoidRootPart"
+			)
 
-		-- تشغيل الكارثة
-		StartDisaster()
+		task.wait(0.2)
 
-		task.wait(0.5)
+		-- إعادة تطبيق الكوارث
+		ApplyEffects()
+
 	end
-end)
+)
+
+--============================================================
+-- NEW MAP PART FIX
+--============================================================
+
+workspace.DescendantAdded:Connect(
+	function(Object)
+
+		-- إذا كارثة إخفاء الماب شغالة
+		for _, Disaster in
+			ipairs(ActiveDisasters) do
+
+			if Disaster.Type == "MapHide"
+				and not Disaster.Removed then
+
+				task.wait()
+
+				HideMapPart(Object)
+
+				break
+
+			end
+
+		end
+
+	end
+)
+
+--============================================================
+-- UPDATE DISASTER TIMERS
+--============================================================
+
+RunService.RenderStepped:Connect(
+	function()
+
+		local Now =
+			tick()
+
+		for i =
+			#ActiveDisasters,
+			1,
+			-1 do
+
+			local Disaster =
+				ActiveDisasters[i]
+
+			if Disaster.Removed then
+				continue
+			end
+
+			local Remaining =
+				Disaster.Expires -
+				Now
+
+			if Remaining <= 0 then
+
+				RemoveDisaster(
+					Disaster
+				)
+
+			else
+
+				if Disaster.Text then
+
+					Disaster.Text.Text =
+						Disaster.Name ..
+						" (" ..
+						string.format(
+							"%.2f",
+							Remaining
+						) ..
+						")"
+
+					Disaster.Text.TextColor3 =
+						RainbowColor(
+							Disaster.ID * 0.15
+						)
+
+				end
+
+			end
+
+		end
+
+		TopTimer.TextColor3 =
+			RainbowColor(0)
+
+	end
+)
+
+--============================================================
+-- MAIN 30 SECOND TIMER
+--============================================================
+
+task.spawn(
+	function()
+
+		while true do
+
+			local Start =
+				tick()
+
+			while true do
+
+				local Elapsed =
+					tick() - Start
+
+				local Remaining =
+					SPAWN_TIME -
+					Elapsed
+
+				if Remaining <= 0 then
+					break
+				end
+
+				TopTimer.Text =
+					string.format(
+						"%.1f",
+						Remaining
+					)
+
+				task.wait(0.05)
+
+			end
+
+			TopTimer.Text = "0"
+
+			StartDisaster()
+
+			task.wait(0.2)
+
+		end
+
+	end
+)
