@@ -10,8 +10,8 @@ local Player = Players.LocalPlayer
 local PlayerGui = Player:WaitForChild("PlayerGui")
 
 --// الصور
-local OpenImage = "rbxassetid://88867907243603"
-local ButtonImage = "rbxassetid://8732036565"
+local OpenImage = "rbxassetid://115702003620447"
+local ButtonImage = "rbxassetid://8732036547"
 
 --// صوت جميع الأزرار
 local ClickSoundId = "rbxassetid://139219844119994"
