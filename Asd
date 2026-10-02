@@ -158,7 +158,7 @@ local Section = Tab:AddSection({
 
 AddButton(Section, "mm2/ام ام تو", function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RuzHub-239052"))()
-end
+end)
 
 AddButton(Section, "steal an egg/سرقه بيض", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua "))()
