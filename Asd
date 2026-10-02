@@ -139,6 +139,10 @@ AddButton(Section, "toolgiver/اخذ ادوات لاعبين", function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
 end)
 
+AddButton(Section, "سكربت كوارث من صنعي", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Mkol"))()
+end)
+
 --============================================================
 -- GAME SCRIPTS
 --============================================================
