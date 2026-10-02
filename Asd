@@ -47,7 +47,7 @@ local function AddButton(Section, Name, Code)
             --================================================
 
             if Code then
-                Code(12446779253)
+                Code()
             end
         end
     })
@@ -284,7 +284,7 @@ OpenButton.Position = UDim2.new(0, 15, 0.5, -27)
 OpenButton.BackgroundTransparency = 1
 
 -- حط ID صورتك هنا
-OpenButton.Image = "rbxassetid://1566149331"
+OpenButton.Image = "rbxassetid://12446779253"
 
 OpenButton.Parent = ScreenGui
 
