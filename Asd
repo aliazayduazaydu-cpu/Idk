@@ -230,7 +230,7 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emot
 end)
 
 AddButton(Section, "animation r6 r15/انميشن", function()
-loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua")()
+loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua"))()
 end)
 
 AddButton(Section, "jetk/عاده سريه", function()
