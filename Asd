@@ -23,7 +23,7 @@ local SoundService = game:GetService("SoundService")
 
 local ClickSound = Instance.new("Sound")
 ClickSound.Name = "ButtonClick"
-ClickSound.SoundId = "rbxassetid://139219844119994"
+ClickSound.SoundId = "rbxassetid://138567614125924"
 ClickSound.Volume = 1
 ClickSound.Parent = SoundService
 
@@ -47,7 +47,7 @@ local function AddButton(Section, Name, Code)
             --================================================
 
             if Code then
-                Code()
+                Code(12446779253)
             end
         end
     })
