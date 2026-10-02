@@ -161,7 +161,7 @@ AddButton(Section, "mm2/ام ام تو", function()
 end)
 
 AddButton(Section, "steal an egg/سرقه بيض", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua "))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()
 end)
 
 AddButton(Section, "99 days/99ليله", function()
@@ -230,7 +230,7 @@ loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emot
 end)
 
 AddButton(Section, "animation r6 r15/انميشن", function()
-loadstring(game:HttpGet"https://you.whimper.xyz/UFE.lua"))()
+loadstring(game:HttpGet("https://you.whimper.xyz/UFE.lua"))()
 end)
 
 AddButton(Section, "jetk/عاده سريه", function()
