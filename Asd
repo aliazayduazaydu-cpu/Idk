@@ -1,0 +1,342 @@
+--// =========================================================
+--// ORION UI
+--// نفس ترتيب سكربتك
+--// Button Sound + Image Open/Close
+--// =========================================================
+
+local OrionLib = loadstring(game:HttpGet(
+    "https://raw.githubusercontent.com/Qanuir/orion-ui/refs/heads/main/source.lua"
+))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "اول سكربت عربي اسطوري / Roblox random scripts",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "اول سكربت عربي اسطوري"
+})
+
+--============================================================
+-- SOUND
+--============================================================
+
+local SoundService = game:GetService("SoundService")
+
+local ClickSound = Instance.new("Sound")
+ClickSound.Name = "ButtonClick"
+ClickSound.SoundId = "rbxassetid://139219844119994"
+ClickSound.Volume = 1
+ClickSound.Parent = SoundService
+
+local function PlaySound()
+    ClickSound:Stop()
+    ClickSound:Play()
+end
+
+--============================================================
+-- BUTTON FUNCTION
+--============================================================
+
+local function AddButton(Section, Name, Code)
+    Section:AddButton({
+        Name = Name,
+        Callback = function()
+            PlaySound()
+
+            --================================================
+            -- حط كود الزر هنا
+            --================================================
+
+            if Code then
+                Code()
+            end
+        end
+    })
+end
+
+--============================================================
+-- PLAYER
+--============================================================
+
+local Tab = Window:MakeTab({
+    Name = "player",
+    Icon = "rbxassetid://4483345998"
+})
+
+local Section = Tab:AddSection({
+    Name = "script"
+})
+
+AddButton(Section, "wallhop/ول هوب", function()
+    -- حط كود wallhop هنا
+end)
+
+AddButton(Section, "invisible/اختفاء", function()
+    -- حط كود invisible هنا
+end)
+
+AddButton(Section, "hitbox/ضرب عن بعد", function()
+    -- حط كود hitbox هنا
+end)
+
+AddButton(Section, "esp by me/كشف لاعبين من صنعي", function()
+    -- حط كود ESP هنا
+end)
+
+AddButton(Section, "aimbot/ايم بوت", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "bang/بانق", function()
+    -- حط كودك هنا
+end)
+
+--============================================================
+-- SCRIPTS
+--============================================================
+
+local Tab = Window:MakeTab({
+    Name = "scripts",
+    Icon = "rbxassetid://4483345998"
+})
+
+local Section = Tab:AddSection({
+    Name = "script"
+})
+
+AddButton(Section, "control NPC/تحكم ب بوتات", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "ok-13/سكربت عشوائي", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "loopfling/فنق سريع في فنق كل", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "toxic/تعصيب ناس", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "tiger hub/تايكر سكربت", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "control tools/تحكم ب ادوات", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "synapse x/سكربت يفيدك ل صنع سكربتات", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "float/مشي على سماء", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "toolgiver/اخذ ادوات لاعبين", function()
+    -- حط كودك هنا
+end)
+
+--============================================================
+-- GAME SCRIPTS
+--============================================================
+
+local Tab = Window:MakeTab({
+    Name = "game scripts",
+    Icon = "rbxassetid://4483345998"
+})
+
+local Section = Tab:AddSection({
+    Name = "script"
+})
+
+AddButton(Section, "mm2/ام ام تو", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "steal an egg/سرقه بيض", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "99 days/99ليله", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "Brookhaven/ماب بيوت", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "blox fruit/بلوكص فروت", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "rivals/رايفلز", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "Brookhaven 2/ماب بيوت", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "ride pet/ركوب حيوانات", function()
+    -- حط كودك هنا
+end)
+
+--============================================================
+-- ANIMATION
+--============================================================
+
+local Tab = Window:MakeTab({
+    Name = "animation",
+    Icon = "rbxassetid://4483345998"
+})
+
+local Section = Tab:AddSection({
+    Name = "script"
+})
+
+AddButton(Section, "animation r6/انميشن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "animation r6/r15/انمشين", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "animation r6 r15/انميشن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "r6 animation/انميشن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "animation sus/انميشن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "r15 animation/انميشن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "emote r15/رقصات", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "animation r6 r15/انميشن", function()
+    -- حط كودك هنا
+end)
+
+--============================================================
+-- ADMIN
+--============================================================
+
+local Tab = Window:MakeTab({
+    Name = "admin",
+    Icon = "rbxassetid://4483345998"
+})
+
+local Section = Tab:AddSection({
+    Name = "scripts"
+})
+
+AddButton(Section, "infinity yield/ادمن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "admin cmd/ادمن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "admin/ادمن", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "admin fly/ادمن طيران", function()
+    -- حط كودك هنا
+end)
+
+AddButton(Section, "all game remote/ريمونت يستخدم ل اخذ ادوات", function()
+    -- حط كودك هنا
+end)
+
+--============================================================
+-- IMAGE OPEN / CLOSE BUTTON
+--============================================================
+
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+
+local Player = Players.LocalPlayer
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "OrionOpenButton"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = PlayerGui
+
+local OpenButton = Instance.new("ImageButton")
+OpenButton.Name = "OpenClose"
+OpenButton.Size = UDim2.new(0, 55, 0, 55)
+OpenButton.Position = UDim2.new(0, 15, 0.5, -27)
+OpenButton.BackgroundTransparency = 1
+
+-- حط ID صورتك هنا
+OpenButton.Image = "rbxassetid://1566149331"
+
+OpenButton.Parent = ScreenGui
+
+--============================================================
+-- DRAG للجوال
+--============================================================
+
+local Dragging = false
+local DragStart
+local StartPosition
+
+OpenButton.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.Touch
+    or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+        Dragging = true
+        DragStart = Input.Position
+        StartPosition = OpenButton.Position
+    end
+end)
+
+UIS.InputChanged:Connect(function(Input)
+    if Dragging then
+
+        if Input.UserInputType == Enum.UserInputType.Touch
+        or Input.UserInputType == Enum.UserInputType.MouseMovement then
+
+            local Delta = Input.Position - DragStart
+
+            OpenButton.Position = UDim2.new(
+                StartPosition.X.Scale,
+                StartPosition.X.Offset + Delta.X,
+                StartPosition.Y.Scale,
+                StartPosition.Y.Offset + Delta.Y
+            )
+        end
+    end
+end)
+
+UIS.InputEnded:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.Touch
+    or Input.UserInputType == Enum.UserInputType.MouseButton1 then
+
+        Dragging = false
+    end
+end)
+
+--============================================================
+-- OPEN / CLOSE
+--============================================================
+
+OpenButton.Activated:Connect(function()
+    PlaySound()
+    OrionLib:ToggleUi()
+end)
