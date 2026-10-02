@@ -90,6 +90,13 @@ AddButton(Section, "bang/بانق", function()
 loadstring(game:HttpGet("https://luascript-on.vercel.app/raw/d997c49d-b187-4cb4-ad29-aab0495251c3"))()
 end)
 
+AddButton(Section, "افضل سكربت تخريب", function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/OnlyCryptic/Cryptic/main/main.lua"))()
+end)
+
 --============================================================
 -- SCRIPTS
 --============================================================
