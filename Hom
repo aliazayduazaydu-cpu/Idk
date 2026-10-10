@@ -1,0 +1,272 @@
+--// 🌀 ALAWI MAIN MENU
+--// LocalScript
+--// Mobile GUI | Purple & Black
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local RE = ReplicatedStorage:WaitForChild("RE")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+
+--// RemoteEvents
+local ToolEvent = RE:WaitForChild("1Too1l")
+local HairEvent = RE:WaitForChild("1Max1y")
+local RPColorEvent = RE:WaitForChild("1RPNam1eColo1r")
+local RPTextEvent = RE:WaitForChild("1RPNam1eTex1t")
+local ThemeEvent = RE:WaitForChild("1Theme1s")
+local OutfitEvent = Remotes:WaitForChild("AvatarEditorOutfitCodes")
+
+--// RP Settings
+local RPName = "🌀👾سكربت ماب بيوتX👾🌀"
+local RPBio = "👾تم تطويره من قبل علاوي👾"
+
+--// Rainbow states
+local rainbow = {
+    Hair = false,
+    Name = false,
+    Bio = false
+}
+
+--// GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "AlawiMainUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local function addCorner(object, radius)
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, radius)
+    c.Parent = object
+end
+
+local function addStroke(object, color)
+    local s = Instance.new("UIStroke")
+    s.Color = color
+    s.Thickness = 2
+    s.Parent = object
+end
+
+--// Open Button
+local openButton = Instance.new("TextButton")
+openButton.Name = "OpenButton"
+openButton.Size = UDim2.new(0, 100, 0, 48)
+openButton.Position = UDim2.new(0, 18, 0.5, -24)
+openButton.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
+openButton.Text = "تشغيل"
+openButton.TextSize = 16
+openButton.TextColor3 = Color3.new(1, 1, 1)
+openButton.Font = Enum.Font.GothamBold
+openButton.Parent = gui
+
+addCorner(openButton, 10)
+addStroke(openButton, Color3.fromRGB(170, 0, 255))
+
+--// Main Window
+local main = Instance.new("Frame")
+main.Name = "MainMenu"
+main.Size = UDim2.new(0, 290, 0, 405)
+main.Position = UDim2.new(0.5, -145, 0.5, -202)
+main.BackgroundColor3 = Color3.fromRGB(18, 18, 25)
+main.Visible = false
+main.Parent = gui
+
+addCorner(main, 12)
+addStroke(main, Color3.fromRGB(170, 0, 255))
+
+--// Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -48, 0, 45)
+title.Position = UDim2.new(0, 10, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "🌀 قائمة علاوي الأساسية"
+title.TextColor3 = Color3.new(1, 1, 1)
+title.TextSize = 16
+title.Font = Enum.Font.GothamBold
+title.Parent = main
+
+--// Close Button
+local close = Instance.new("TextButton")
+close.Size = UDim2.new(0, 34, 0, 34)
+close.Position = UDim2.new(1, -40, 0, 5)
+close.BackgroundColor3 = Color3.fromRGB(170, 30, 45)
+close.Text = "X"
+close.TextColor3 = Color3.new(1, 1, 1)
+close.TextSize = 17
+close.Font = Enum.Font.GothamBold
+close.Parent = main
+
+addCorner(close, 8)
+
+--// Status
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, -20, 0, 30)
+status.Position = UDim2.new(0, 10, 1, -35)
+status.BackgroundTransparency = 1
+status.Text = "الحالة: جاهز"
+status.TextColor3 = Color3.fromRGB(200, 200, 210)
+status.TextSize = 12
+status.Font = Enum.Font.Gotham
+status.Parent = main
+
+--// Scrolling Buttons
+local list = Instance.new("ScrollingFrame")
+list.Name = "ButtonsList"
+list.Size = UDim2.new(1, -20, 1, -90)
+list.Position = UDim2.new(0, 10, 0, 48)
+list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 4
+list.ScrollBarImageColor3 = Color3.fromRGB(170, 0, 255)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+list.CanvasSize = UDim2.new(0, 0, 0, 0)
+list.Parent = main
+
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 8)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = list
+
+local function addAction(text, callback)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, -5, 0, 43)
+    button.BackgroundColor3 = Color3.fromRGB(40, 30, 53)
+    button.Text = text
+    button.TextColor3 = Color3.new(1, 1, 1)
+    button.TextSize = 14
+    button.Font = Enum.Font.GothamBold
+    button.Parent = list
+
+    addCorner(button, 8)
+    addStroke(button, Color3.fromRGB(125, 35, 180))
+
+    button.Activated:Connect(callback)
+    return button
+end
+
+local function sendRequest(label, callback)
+    local success, err = pcall(callback)
+
+    if success then
+        status.Text = "تم إرسال طلب: " .. label
+    else
+        status.Text = "تعذر إرسال: " .. label
+        warn(err)
+    end
+end
+
+--// 1. Take Cuffs
+addAction("⛓️ أخذ كلبشة", function()
+    sendRequest("الكلبشة", function()
+        ToolEvent:InvokeServer("PickingTools", "Cuffs")
+    end)
+end)
+
+--// 2. Change Outfit
+addAction("👕 تغيير السكن", function()
+    sendRequest("السكن", function()
+        OutfitEvent:InvokeServer(
+            "Load",
+            "BH-AE-f93957f4db3d40418954281c661cf1a5"
+        )
+    end)
+end)
+
+--// 3. Change Theme
+addAction("🌦️ تغيير الجو", function()
+    sendRequest("الجو", function()
+        ThemeEvent:FireServer("AskForTheme", "Theme008")
+    end)
+end)
+
+--// Rainbow helper
+local function toggleRainbow(key, label, callback, button)
+    rainbow[key] = not rainbow[key]
+    local active = rainbow[key]
+
+    button.Text = label .. (active and " 🟢 ON" or " 🔴 OFF")
+    status.Text = label .. (active and ": يعمل" or ": متوقف")
+
+    if not active then
+        return
+    end
+
+    task.spawn(function()
+        while rainbow[key] do
+            local color = Color3.fromHSV(math.random(), 1, 1)
+
+            local success, err = pcall(function()
+                callback(color)
+            end)
+
+            if not success then
+                rainbow[key] = false
+                button.Text = label .. " 🔴 OFF"
+                status.Text = "تعذر تشغيل " .. label
+                warn(err)
+                break
+            end
+
+            task.wait(0.5)
+        end
+    end)
+end
+
+--// 4. Hair Rainbow
+local hairButton
+hairButton = addAction("🌈 تلوين الشعر 🔴 OFF", function()
+    toggleRainbow("Hair", "🌈 تلوين الشعر", function(color)
+        HairEvent:FireServer("ChangeHairColor3", color)
+    end, hairButton)
+end)
+
+--// 5. RP Name Rainbow
+local nameButton
+nameButton = addAction("🟣 تلوين الاسم 🔴 OFF", function()
+    toggleRainbow("Name", "🟣 تلوين الاسم", function(color)
+        RPColorEvent:FireServer("PickingRPNameColor", color)
+    end, nameButton)
+end)
+
+--// 6. RP Bio Rainbow
+local bioButton
+bioButton = addAction("🔴 تلوين الوصف 🔴 OFF", function()
+    toggleRainbow("Bio", "🔴 تلوين الوصف", function(color)
+        RPColorEvent:FireServer("PickingRPBioColor", color)
+    end, bioButton)
+end)
+
+--// Open: show menu + apply RP name and bio
+local function openMenu()
+    main.Visible = true
+    openButton.Text = "إغلاق"
+
+    sendRequest("الاسم والوصف", function()
+        RPTextEvent:FireServer("RolePlayName", RPName)
+        RPTextEvent:FireServer("RolePlayBio", RPBio)
+    end)
+end
+
+local function closeMenu()
+    main.Visible = false
+    openButton.Text = "تشغيل"
+end
+
+openButton.Activated:Connect(function()
+    if main.Visible then
+        closeMenu()
+    else
+        openMenu()
+    end
+end)
+
+close.Activated:Connect(closeMenu)
+
+--// Stop loops if GUI is destroyed
+gui.Destroying:Connect(function()
+    for key in pairs(rainbow) do
+        rainbow[key] = false
+    end
+end)
+
+print("Alawi Main Menu Loaded")
