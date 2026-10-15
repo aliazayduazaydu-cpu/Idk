@@ -1,0 +1,649 @@
+
+--// NOVA UI V4 - PART 1
+--// المكتبة الأساسية والتصميم
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local Stats = game:GetService("Stats")
+
+local Player = Players.LocalPlayer
+
+local Config = {
+    Title = "NOVA UI",
+    OpenImage = "rbxassetid://7244649818",
+    BackgroundImage = "rbxassetid://415739623",
+    RGB = true
+}
+
+local Library = {
+    Tabs = {},
+    Connections = {},
+    Visible = true
+}
+
+local function New(className, properties, parent)
+    local object = Instance.new(className)
+    for key, value in pairs(properties or {}) do
+        object[key] = value
+    end
+    object.Parent = parent
+    return object
+end
+
+local function Round(object, radius)
+    New("UICorner", {
+        CornerRadius = UDim.new(0, radius or 9)
+    }, object)
+end
+
+local function Stroke(object, color, thickness)
+    return New("UIStroke", {
+        Color = color or Color3.fromRGB(255, 45, 90),
+        Thickness = thickness or 1.2
+    }, object)
+end
+
+local function Tween(object, properties, duration)
+    local tween = TweenService:Create(
+        object,
+        TweenInfo.new(duration or 0.2, Enum.EasingStyle.Quart,
+            Enum.EasingDirection.Out),
+        properties
+    )
+    tween:Play()
+    return tween
+end
+
+local function Drag(handle, target)
+    local dragging = false
+    local dragStart
+    local startPosition
+    local activeInput
+
+    handle.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPosition = target.Position
+
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    handle.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch then
+            activeInput = input
+        end
+    end)
+
+    local connection = UserInputService.InputChanged:Connect(function(input)
+        if dragging and input == activeInput then
+            local delta = input.Position - dragStart
+            target.Position = UDim2.new(
+                startPosition.X.Scale,
+                startPosition.X.Offset + delta.X,
+                startPosition.Y.Scale,
+                startPosition.Y.Offset + delta.Y
+            )
+        end
+    end)
+
+    table.insert(Library.Connections, connection)
+end
+
+local PlayerGui = Player:WaitForChild("PlayerGui")
+
+local old = PlayerGui:FindFirstChild("NOVA_UI")
+if old then
+    old:Destroy()
+end
+
+local ScreenGui = New("ScreenGui", {
+    Name = "NOVA_UI",
+    ResetOnSpawn = false,
+    ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+}, PlayerGui)
+
+local OpenButton = New("ImageButton", {
+    Name = "OpenButton",
+    Position = UDim2.new(0, 16, 0.42, 0),
+    Size = UDim2.fromOffset(48, 48),
+    BackgroundColor3 = Color3.fromRGB(20, 20, 28),
+    Image = Config.OpenImage,
+    ScaleType = Enum.ScaleType.Fit,
+    AutoButtonColor = false,
+    ZIndex = 10
+}, ScreenGui)
+Round(OpenButton, 12)
+Stroke(OpenButton, Color3.fromRGB(70, 145, 255), 2)
+Drag(OpenButton, OpenButton)
+
+local Window = New("Frame", {
+    Name = "Window",
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    Position = UDim2.fromScale(0.5, 0.5),
+    Size = UDim2.new(0.86, 0, 0.68, 0),
+    BackgroundColor3 = Color3.fromRGB(14, 14, 20),
+    BorderSizePixel = 0,
+    ClipsDescendants = true,
+    ZIndex = 2
+}, ScreenGui)
+Round(Window, 13)
+local WindowStroke = Stroke(Window)
+
+New("UISizeConstraint", {
+    MinSize = Vector2.new(280, 320),
+    MaxSize = Vector2.new(520, 600)
+}, Window)
+
+local Background = New("ImageLabel", {
+    Name = "Background",
+    Position = UDim2.fromScale(-0.25, -0.25),
+    Size = UDim2.fromScale(1.5, 1.5),
+    BackgroundTransparency = 1,
+    Image = Config.BackgroundImage,
+    ImageTransparency = 0.5,
+    ScaleType = Enum.ScaleType.Crop,
+    ZIndex = 2
+}, Window)
+
+New("Frame", {
+    Name = "Overlay",
+    Size = UDim2.fromScale(1, 1),
+    BackgroundColor3 = Color3.fromRGB(12, 12, 18),
+    BackgroundTransparency = 0.18,
+    BorderSizePixel = 0,
+    ZIndex = 3
+}, Window)
+
+local Header = New("Frame", {
+    Name = "Header",
+    Size = UDim2.new(1, 0, 0, 48),
+    BackgroundColor3 = Color3.fromRGB(22, 22, 30),
+    BackgroundTransparency = 0.05,
+    BorderSizePixel = 0,
+    ZIndex = 5
+}, Window)
+
+New("TextLabel", {
+    Name = "Title",
+    Position = UDim2.fromOffset(13, 0),
+    Size = UDim2.new(1, -65, 1, 0),
+    BackgroundTransparency = 1,
+    Text = Config.Title,
+    TextColor3 = Color3.new(1, 1, 1),
+    Font = Enum.Font.GothamBold,
+    TextSize = 18,
+    TextXAlignment = Enum.TextXAlignment.Left,
+    ZIndex = 6
+}, Header)
+
+local CloseButton = New("TextButton", {
+    Name = "CloseButton",
+    AnchorPoint = Vector2.new(1, 0.5),
+    Position = UDim2.new(1, -8, 0.5, 0),
+    Size = UDim2.fromOffset(32, 32),
+    BackgroundColor3 = Color3.fromRGB(190, 40, 55),
+    Text = "X",
+    TextColor3 = Color3.new(1, 1, 1),
+    Font = Enum.Font.GothamBold,
+    TextSize = 15,
+    ZIndex = 6
+}, Header)
+Round(CloseButton, 7)
+
+Drag(Header, Window)
+
+local Accent = New("Frame", {
+    Position = UDim2.new(0, 0, 0, 47),
+    Size = UDim2.new(1, 0, 0, 2),
+    BackgroundColor3 = Color3.fromRGB(255, 40, 90),
+    BorderSizePixel = 0,
+    ZIndex = 7
+}, Window)
+
+local TabBar = New("Frame", {
+    Name = "TabBar",
+    Position = UDim2.fromOffset(8, 57),
+    Size = UDim2.new(1, -16, 0, 38),
+    BackgroundTransparency = 1,
+    ZIndex = 5
+}, Window)
+
+New("UIListLayout", {
+    FillDirection = Enum.FillDirection.Horizontal,
+    SortOrder = Enum.SortOrder.LayoutOrder,
+    Padding = UDim.new(0, 6)
+}, TabBar)
+
+local Pages = New("Frame", {
+    Name = "Pages",
+    Position = UDim2.fromOffset(8, 102),
+    Size = UDim2.new(1, -16, 1, -110),
+    BackgroundTransparency = 1,
+    ZIndex = 5
+}, Window)
+
+local function SetVisible(state)
+    Library.Visible = state
+    Window.Visible = state
+end
+
+OpenButton.Activated:Connect(function()
+    SetVisible(not Window.Visible)
+end)
+
+CloseButton.Activated:Connect(function()
+    SetVisible(false)
+end)
+
+--// إنشاء تبويب واحد عند طلبه
+function Library:CreateTab(name)
+    assert(not self.Tabs[name], "Tab already exists: " .. name)
+
+    local index = 0
+    for _ in pairs(self.Tabs) do
+        index += 1
+    end
+
+    local TabButton = New("TextButton", {
+        Name = name .. "Button",
+        Size = UDim2.new(0, 100, 1, 0),
+        BackgroundColor3 = Color3.fromRGB(32, 32, 43),
+        Text = name,
+        TextColor3 = Color3.new(1, 1, 1),
+        Font = Enum.Font.GothamBold,
+        TextSize = 13,
+        AutoButtonColor = false,
+        LayoutOrder = index + 1,
+        ZIndex = 6
+    }, TabBar)
+    Round(TabButton, 8)
+
+    local Page = New("ScrollingFrame", {
+        Name = name .. "Page",
+        Size = UDim2.fromScale(1, 1),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+        ScrollBarThickness = 3,
+        ScrollBarImageColor3 = Color3.fromRGB(255, 50, 100),
+        AutomaticCanvasSize = Enum.AutomaticSize.Y,
+        CanvasSize = UDim2.new(0, 0, 0, 0),
+        Visible = false,
+        ZIndex = 5
+    }, Pages)
+
+    New("UIPadding", {
+        PaddingTop = UDim.new(0, 5),
+        PaddingBottom = UDim.new(0, 8),
+        PaddingLeft = UDim.new(0, 3),
+        PaddingRight = UDim.new(0, 3)
+    }, Page)
+
+    New("UIListLayout", {
+        Padding = UDim.new(0, 8),
+        SortOrder = Enum.SortOrder.LayoutOrder
+    }, Page)
+
+    local order = 0
+    local API = {}
+
+    local function AddOrder(object)
+        order += 1
+        object.LayoutOrder = order
+        return object
+    end
+
+    local function Select()
+        for _, tab in pairs(Library.Tabs) do
+            tab.Page.Visible = false
+            Tween(tab.Button, {
+                BackgroundColor3 = Color3.fromRGB(32, 32, 43)
+            }, 0.12)
+        end
+
+        Page.Visible = true
+        Tween(TabButton, {
+            BackgroundColor3 = Color3.fromRGB(150, 35, 65)
+        }, 0.12)
+    end
+
+    function API:AddSection(text)
+        local section = New("TextLabel", {
+            Size = UDim2.new(1, -2, 0, 30),
+            BackgroundTransparency = 1,
+            Text = "— " .. text .. " —",
+            TextColor3 = Color3.fromRGB(255, 90, 125),
+            Font = Enum.Font.GothamBold,
+            TextSize = 14,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            ZIndex = 6
+        }, Page)
+        return AddOrder(section)
+    end
+
+    function API:AddLabel(text)
+        local label = New("TextLabel", {
+            Size = UDim2.new(1, -2, 0, 32),
+            BackgroundColor3 = Color3.fromRGB(25, 25, 34),
+            Text = "  " .. tostring(text),
+            TextColor3 = Color3.fromRGB(225, 225, 235),
+            Font = Enum.Font.Gotham,
+            TextSize = 13,
+            TextWrapped = true,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            ZIndex = 6
+        }, Page)
+        Round(label, 7)
+        return AddOrder(label)
+    end
+
+    function API:AddButton(options)
+        options = options or {}
+
+        local button = New("TextButton", {
+            Size = UDim2.new(1, -2, 0, 40),
+            BackgroundColor3 = Color3.fromRGB(30, 30, 41),
+            Text = options.Name or "Button",
+            TextColor3 = Color3.new(1, 1, 1),
+            Font = Enum.Font.GothamBold,
+            TextSize = 13,
+            AutoButtonColor = false,
+            ZIndex = 6
+        }, Page)
+
+        Round(button, 8)
+        Stroke(button, Color3.fromRGB(75, 75, 95), 1)
+        AddOrder(button)
+
+        button.Activated:Connect(function()
+            Tween(button, {
+                BackgroundColor3 = Color3.fromRGB(110, 35, 65)
+            }, 0.08)
+
+            task.delay(0.12, function()
+                if button.Parent then
+                    Tween(button, {
+                        BackgroundColor3 = Color3.fromRGB(30, 30, 41)
+                    }, 0.15)
+                end
+            end)
+
+            if typeof(options.Callback) == "function" then
+                local ok, err = pcall(options.Callback)
+                if not ok then
+                    warn("[NOVA Button]", err)
+                end
+            end
+        end)
+
+        return button
+    end
+
+    function API:AddToggle(options)
+        options = options or {}
+        local state = options.Default == true
+
+        local frame = New("Frame", {
+            Size = UDim2.new(1, -2, 0, 42),
+            BackgroundColor3 = Color3.fromRGB(25, 25, 34),
+            ZIndex = 6
+        }, Page)
+        Round(frame, 8)
+        AddOrder(frame)
+
+        New("TextLabel", {
+            Position = UDim2.fromOffset(10, 0),
+            Size = UDim2.new(1, -72, 1, 0),
+            BackgroundTransparency = 1,
+            Text = options.Name or "Toggle",
+            TextColor3 = Color3.new(1, 1, 1),
+            Font = Enum.Font.Gotham,
+            TextSize = 13,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            ZIndex = 7
+        }, frame)
+
+        local switch = New("TextButton", {
+            AnchorPoint = Vector2.new(1, 0.5),
+            Position = UDim2.new(1, -8, 0.5, 0),
+            Size = UDim2.fromOffset(48, 24),
+            BackgroundColor3 = Color3.fromRGB(80, 80, 90),
+            Text = "",
+            AutoButtonColor = false,
+            ZIndex = 7
+        }, frame)
+        Round(switch, 12)
+
+        local knob = New("Frame", {
+            Position = UDim2.fromOffset(3, 3),
+            Size = UDim2.fromOffset(18, 18),
+            BackgroundColor3 = Color3.new(1, 1, 1),
+            ZIndex = 8
+        }, switch)
+        Round(knob, 10)
+
+        local function Set(value, callCallback)
+            state = value == true
+
+            Tween(switch, {
+                BackgroundColor3 = state
+                    and Color3.fromRGB(30, 190, 100)
+                    or Color3.fromRGB(80, 80, 90)
+            }, 0.15)
+
+            Tween(knob, {
+                Position = state
+                    and UDim2.new(1, -21, 0, 3)
+                    or UDim2.fromOffset(3, 3)
+            }, 0.15)
+
+            if callCallback ~= false
+            and typeof(options.Callback) == "function" then
+                local ok, err = pcall(options.Callback, state)
+                if not ok then
+                    warn("[NOVA Toggle]", err)
+                end
+            end
+        end
+
+        switch.Activated:Connect(function()
+            Set(not state, true)
+        end)
+
+        Set(state, false)
+
+        return {
+            Set = function(_, value)
+                Set(value, true)
+            end,
+            Get = function()
+                return state
+            end
+        }
+    end
+
+    API.Page = Page
+    API.Button = TabButton
+    API.Select = Select
+
+    Library.Tabs[name] = API
+    TabButton.Activated:Connect(Select)
+
+    if index == 0 then
+        Select()
+    end
+
+    return API
+end
+
+--// END PART 1
+--// الصق الجزء الثاني مباشرة تحته
+
+--// NOVA UI V4 - PART 2
+--// محتويات Main وكل الأزرار الإضافية
+
+local Main = Library:CreateTab("Main")
+
+-- بطاقة اللاعب
+local Profile = New("Frame", {
+    Name = "PlayerProfile",
+    Size = UDim2.new(1, -2, 0, 82),
+    BackgroundColor3 = Color3.fromRGB(24, 24, 33),
+    LayoutOrder = 1,
+    ZIndex = 6
+}, Main.Page)
+
+Round(Profile, 10)
+Stroke(Profile, Color3.fromRGB(100, 40, 75), 1)
+
+local Avatar = New("ImageLabel", {
+    Position = UDim2.fromOffset(10, 10),
+    Size = UDim2.fromOffset(60, 60),
+    BackgroundColor3 = Color3.fromRGB(40, 40, 50),
+    Image = "rbxassetid://18923169473",
+    ScaleType = Enum.ScaleType.Crop,
+    ZIndex = 7
+}, Profile)
+Round(Avatar, 30)
+
+task.spawn(function()
+    local ok, image = pcall(function()
+        return Players:GetUserThumbnailAsync(
+            Player.UserId,
+            Enum.ThumbnailType.HeadShot,
+            Enum.ThumbnailSize.Size150x150
+        )
+    end)
+
+    if ok and Avatar.Parent then
+        Avatar.Image = image
+    end
+end)
+
+New("TextLabel", {
+    Position = UDim2.fromOffset(82, 13),
+    Size = UDim2.new(1, -92, 0, 26),
+    BackgroundTransparency = 1,
+    Text = Player.DisplayName,
+    TextColor3 = Color3.new(1, 1, 1),
+    Font = Enum.Font.GothamBold,
+    TextSize = 16,
+    TextXAlignment = Enum.TextXAlignment.Left,
+    ZIndex = 7
+}, Profile)
+
+New("TextLabel", {
+    Position = UDim2.fromOffset(82, 40),
+    Size = UDim2.new(1, -92, 0, 22),
+    BackgroundTransparency = 1,
+    Text = "@" .. Player.Name,
+    TextColor3 = Color3.fromRGB(170, 170, 185),
+    Font = Enum.Font.Gotham,
+    TextSize = 12,
+    TextXAlignment = Enum.TextXAlignment.Left,
+    ZIndex = 7
+}, Profile)
+
+Main:AddSection("معلومات اللعبة")
+
+local GameLabel = Main:AddLabel("الماب: جاري التحميل...")
+local PingLabel = Main:AddLabel("Ping: ...")
+local FPSLabel = Main:AddLabel("FPS: ...")
+local BankLabel = Main:AddLabel("Bank: ...")
+
+task.spawn(function()
+    local ok, info = pcall(function()
+        return MarketplaceService:GetProductInfo(game.PlaceId)
+    end)
+
+    if ok and info then
+        GameLabel.Text = "  الماب: " .. tostring(info.Name)
+    else
+        GameLabel.Text = "  الماب: " .. tostring(game.PlaceId)
+    end
+end)
+
+local function UpdateBank()
+    local value
+
+    local leaderstats = Player:FindFirstChild("leaderstats")
+    if leaderstats then
+        local bank = leaderstats:FindFirstChild("Bank")
+        if bank and (
+            bank:IsA("IntValue")
+            or bank:IsA("NumberValue")
+            or bank:IsA("StringValue")
+        ) then
+            value = bank.Value
+        end
+    end
+
+    if value == nil then
+        value = Player:GetAttribute("Bank")
+    end
+
+    BankLabel.Text = "  Bank: " ..
+        (value ~= nil and tostring(value) or "غير متوفر")
+end
+
+local frames = 0
+local lastUpdate = os.clock()
+
+local fpsConnection = RunService.RenderStepped:Connect(function()
+    frames += 1
+
+    local now = os.clock()
+    if now - lastUpdate >= 1 then
+        FPSLabel.Text = "  FPS: " .. tostring(frames)
+        frames = 0
+        lastUpdate = now
+    end
+end)
+table.insert(Library.Connections, fpsConnection)
+
+task.spawn(function()
+    while ScreenGui.Parent do
+        local ping = "غير متوفر"
+
+        local ok, result = pcall(function()
+            return Stats.Network.ServerStatsItem["Data Ping"]:GetValueString()
+        end)
+
+        if ok and result then
+            ping = tostring(result)
+        end
+
+        PingLabel.Text = "  Ping: " .. ping
+        UpdateBank()
+
+        task.wait(2)
+    end
+end)
+
+-- تأثير RGB
+local rgbConnection = RunService.RenderStepped:Connect(function(dt)
+    local color = Color3.fromHSV((os.clock() * 0.15) % 1, 0.85, 1)
+    Accent.BackgroundColor3 = color
+    WindowStroke.Color = color
+
+    if Window.Visible then
+        Background.Rotation = (Background.Rotation + dt * 5) % 360
+    end
+end)
+table.insert(Library.Connections, rgbConnection)
+
+--================================================
+-- كل أزرارك الإضافية توضع هنا
+-- Main موجودة بالفعل، لا تنشئ Main جديدة
+--================================================
+
