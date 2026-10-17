@@ -1845,7 +1845,7 @@ Credits_Label.BorderSizePixel = 0
 Credits_Label.Position = UDim2.new(0, 25, 0, 150)
 Credits_Label.Size = UDim2.new(0, 350, 0, 150)
 Credits_Label.Font = Enum.Font.SourceSans
-Credits_Label.Text = "مصنوع من: علاوي : "..version
+Credits_Label.Text = "تم صنعه من علاوي"
 Credits_Label.TextColor3 = Color3.fromRGB(0, 255, 255)
 Credits_Label.TextSize = 24.000
 Credits_Label.TextWrapped = true
@@ -1861,7 +1861,7 @@ Crown.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Crown.BorderSizePixel = 0
 Crown.Rotation = -20.000
 Crown.Size = UDim2.new(0, 75, 0, 75)
-Crown.Image = "rbxassetid://7938753161"
+Crown.Image = "rbxassetid://12298407748"
 Crown.ImageColor3 = Color3.fromRGB(0, 255, 255)
 
 Assets.Name = "Assets"
