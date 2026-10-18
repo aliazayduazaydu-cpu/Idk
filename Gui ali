@@ -1,0 +1,355 @@
+-- LocalScript  →  حطه داخل StarterGui
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+
+--==================== الإعدادات ====================--
+local TOGGLE_IMAGE = "rbxassetid://7938753161"   -- صورة زر الفتح والغلق
+local MENU_BG      = "rbxassetid://11028318025"  -- خلفية القائمة
+local MENU_TITLE   = "shadow gui"
+
+-- غيّر اسم كل زر وحط السكربت حقك داخل function
+local BUTTONS = {
+	{ Name = "", Callback = function()
+		print("الزر 1")
+		-- حط سكربتك هنا
+	end },
+	{ Name = "الزر 2", Callback = function()
+		print("الزر 2")
+		-- حط سكربتك هنا
+	end },
+	{ Name = "الزر 3", Callback = function()
+		print("الزر 3")
+		-- حط سكربتك هنا
+	end },
+	{ Name = "الزر 4", Callback = function()
+		print("الزر 4")
+		-- حط سكربتك هنا
+	end },
+	{ Name = "الزر 5", Callback = function()
+		print("الزر 5")
+		-- حط سكربتك هنا
+	end },
+	{ Name = "الزر 6", Callback = function()
+		print("الزر 6")
+		-- حط سكربتك هنا
+	end },
+}
+--====================================================--
+
+local function tween(obj, time, props, style, dir)
+	local t = TweenService:Create(obj, TweenInfo.new(time, style or Enum.EasingStyle.Quad, dir or Enum.EasingDirection.Out), props)
+	t:Play()
+	return t
+end
+
+local function corner(parent, radius)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, radius)
+	c.Parent = parent
+	return c
+end
+
+local function stroke(parent, thickness, color)
+	local s = Instance.new("UIStroke")
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	s.Thickness = thickness
+	s.Color = color
+	s.Parent = parent
+	return s
+end
+
+-- سحب سلس (ماوس + جوال). onClick يشتغل لو ما تحرك الزر
+local function makeDraggable(handle, target, onClick)
+	local dragging, dragStart, startPos, moved = false, nil, nil, false
+
+	handle.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			moved = false
+			dragStart = input.Position
+			startPos = target.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+					if not moved and onClick then onClick() end
+				end
+			end)
+		end
+	end)
+
+	UIS.InputChanged:Connect(function(input)
+		if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			local delta = input.Position - dragStart
+			if delta.Magnitude > 6 then moved = true end
+			if moved then
+				tween(target, 0.08, {
+					Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+				})
+			end
+		end
+	end)
+end
+
+--==================== الواجهة ====================--
+local gui = Instance.new("ScreenGui")
+gui.Name = "SmoothMenu"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- القائمة
+local menu = Instance.new("Frame")
+menu.Name = "Menu"
+menu.Size = UDim2.new(0, 330, 0, 420)
+menu.AnchorPoint = Vector2.new(0.5, 0.5)
+menu.Position = UDim2.new(0.5, 0, 0.5, 0)
+menu.BackgroundColor3 = Color3.fromRGB(15, 12, 28)
+menu.ClipsDescendants = true
+menu.Visible = false
+menu.Parent = gui
+corner(menu, 18)
+local menuStroke = stroke(menu, 2.5, Color3.fromRGB(150, 90, 255))
+local menuScale = Instance.new("UIScale")
+menuScale.Scale = 0
+menuScale.Parent = menu
+
+-- خلفية القائمة
+local bg = Instance.new("ImageLabel")
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.BackgroundTransparency = 1
+bg.Image = MENU_BG
+bg.ScaleType = Enum.ScaleType.Crop
+bg.ZIndex = 1
+bg.Parent = menu
+corner(bg, 18)
+
+-- طبقة تغميق خفيفة عشان الأزرار تبان
+local shade = Instance.new("Frame")
+shade.Size = UDim2.new(1, 0, 1, 0)
+shade.BackgroundColor3 = Color3.new(0, 0, 0)
+shade.BackgroundTransparency = 0.55
+shade.BorderSizePixel = 0
+shade.ZIndex = 2
+shade.Parent = menu
+corner(shade, 18)
+
+-- شريط العنوان (من هنا تسحب القائمة)
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 50)
+titleBar.BackgroundColor3 = Color3.fromRGB(30, 20, 60)
+titleBar.BackgroundTransparency = 0.25
+titleBar.BorderSizePixel = 0
+titleBar.ZIndex = 3
+titleBar.Parent = menu
+local titleGrad = Instance.new("UIGradient")
+titleGrad.Color = ColorSequence.new(Color3.fromRGB(140, 80, 255), Color3.fromRGB(60, 140, 255))
+titleGrad.Parent = titleBar
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -60, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = MENU_TITLE
+title.TextColor3 = Color3.new(1, 1, 1)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.ZIndex = 4
+title.Parent = titleBar
+
+-- زر X داخل القائمة
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 34, 0, 34)
+closeBtn.AnchorPoint = Vector2.new(1, 0.5)
+closeBtn.Position = UDim2.new(1, -10, 0.5, 0)
+closeBtn.BackgroundColor3 = Color3.fromRGB(255, 70, 90)
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.new(1, 1, 1)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 16
+closeBtn.AutoButtonColor = false
+closeBtn.ZIndex = 5
+closeBtn.Parent = titleBar
+corner(closeBtn, 10)
+
+-- حاوية الأزرار
+local list = Instance.new("ScrollingFrame")
+list.Size = UDim2.new(1, -28, 1, -70)
+list.Position = UDim2.new(0, 14, 0, 62)
+list.BackgroundTransparency = 1
+list.BorderSizePixel = 0
+list.ScrollBarThickness = 0
+list.CanvasSize = UDim2.new(0, 0, 0, 0)
+list.AutomaticCanvasSize = Enum.AutomaticSize.Y
+list.ZIndex = 3
+list.Parent = menu
+local layout = Instance.new("UIListLayout")
+layout.Padding = UDim.new(0, 9)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+layout.Parent = list
+
+-- زر الفتح والغلق
+local toggle = Instance.new("ImageButton")
+toggle.Name = "Toggle"
+toggle.Size = UDim2.new(0, 62, 0, 62)
+toggle.Position = UDim2.new(0, 18, 0.4, 0)
+toggle.BackgroundTransparency = 1
+toggle.Image = TOGGLE_IMAGE
+toggle.ScaleType = Enum.ScaleType.Fit
+toggle.AutoButtonColor = false
+toggle.ZIndex = 10
+toggle.Parent = gui
+local toggleScale = Instance.new("UIScale")
+toggleScale.Parent = toggle
+
+--==================== الأزرار ====================--
+local buttonScales = {}
+
+for i, data in ipairs(BUTTONS) do
+	local btn = Instance.new("TextButton")
+	btn.Name = "Btn" .. i
+	btn.LayoutOrder = i
+	btn.Size = UDim2.new(1, 0, 0, 48)
+	btn.BackgroundColor3 = Color3.fromRGB(40, 28, 80)
+	btn.BackgroundTransparency = 0.15
+	btn.Text = data.Name
+	btn.TextColor3 = Color3.new(1, 1, 1)
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 18
+	btn.AutoButtonColor = false
+	btn.ClipsDescendants = true
+	btn.ZIndex = 4
+	btn.Parent = list
+	corner(btn, 12)
+	local bStroke = stroke(btn, 1.5, Color3.fromRGB(120, 80, 220))
+
+	local grad = Instance.new("UIGradient")
+	grad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(170, 150, 230))
+	grad.Rotation = 90
+	grad.Parent = btn
+
+	local sc = Instance.new("UIScale")
+	sc.Scale = 0
+	sc.Parent = btn
+	buttonScales[i] = sc
+
+	-- تأثير الماوس
+	btn.MouseEnter:Connect(function()
+		tween(btn, 0.2, { BackgroundColor3 = Color3.fromRGB(95, 55, 200), BackgroundTransparency = 0 })
+		tween(bStroke, 0.2, { Color = Color3.fromRGB(0, 220, 255) })
+		tween(sc, 0.2, { Scale = 1.04 }, Enum.EasingStyle.Back)
+	end)
+	btn.MouseLeave:Connect(function()
+		tween(btn, 0.25, { BackgroundColor3 = Color3.fromRGB(40, 28, 80), BackgroundTransparency = 0.15 })
+		tween(bStroke, 0.25, { Color = Color3.fromRGB(120, 80, 220) })
+		tween(sc, 0.25, { Scale = 1 })
+	end)
+
+	-- تأثير الضغط + وميض
+	btn.MouseButton1Down:Connect(function()
+		tween(sc, 0.08, { Scale = 0.93 })
+	end)
+	btn.MouseButton1Up:Connect(function()
+		tween(sc, 0.2, { Scale = 1.04 }, Enum.EasingStyle.Back)
+	end)
+	btn.MouseButton1Click:Connect(function()
+		local ripple = Instance.new("Frame")
+		ripple.AnchorPoint = Vector2.new(0.5, 0.5)
+		ripple.Position = UDim2.new(0.5, 0, 0.5, 0)
+		ripple.Size = UDim2.new(0, 0, 0, 0)
+		ripple.BackgroundColor3 = Color3.new(1, 1, 1)
+		ripple.BackgroundTransparency = 0.5
+		ripple.ZIndex = 5
+		ripple.Parent = btn
+		corner(ripple, 999)
+		local t = tween(ripple, 0.5, { Size = UDim2.new(0, 400, 0, 400), BackgroundTransparency = 1 })
+		t.Completed:Connect(function() ripple:Destroy() end)
+
+		task.spawn(function()
+			local ok, err = pcall(data.Callback)
+			if not ok then warn("خطأ في سكربت " .. data.Name .. ": " .. tostring(err)) end
+		end)
+	end)
+end
+
+--==================== فتح / غلق ====================--
+local isOpen = false
+local busy = false
+local hue = 0
+
+local function setOpen(state)
+	if busy or state == isOpen then return end
+	busy = true
+	isOpen = state
+
+	if state then
+		menu.Visible = true
+		menuScale.Scale = 0
+		for _, s in ipairs(buttonScales) do s.Scale = 0 end
+
+		tween(menuScale, 0.5, { Scale = 1 }, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+		for i, s in ipairs(buttonScales) do
+			task.delay(0.12 + i * 0.06, function()
+				if isOpen then
+					tween(s, 0.4, { Scale = 1 }, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+				end
+			end)
+		end
+
+		toggle.Rotation = 0
+		local r = tween(toggle, 0.5, { Rotation = 360 }, Enum.EasingStyle.Quint)
+		r.Completed:Connect(function() toggle.Rotation = 0 end)
+		task.delay(0.5, function() busy = false end)
+	else
+		local t = tween(menuScale, 0.35, { Scale = 0 }, Enum.EasingStyle.Back, Enum.EasingDirection.In)
+		t.Completed:Connect(function()
+			if not isOpen then menu.Visible = false end
+			busy = false
+		end)
+
+		toggle.Rotation = 0
+		local r = tween(toggle, 0.4, { Rotation = -360 }, Enum.EasingStyle.Quint)
+		r.Completed:Connect(function() toggle.Rotation = 0 end)
+	end
+end
+
+-- إطار قوس قزح متحرك وقت فتح القائمة
+RunService.Heartbeat:Connect(function(dt)
+	if isOpen then
+		hue = (hue + dt * 0.25) % 1
+		menuStroke.Color = Color3.fromHSV(hue, 0.7, 1)
+		titleGrad.Rotation = (titleGrad.Rotation + dt * 60) % 360
+	end
+end)
+
+-- تأثير زر الفتح
+toggle.MouseEnter:Connect(function()
+	tween(toggleScale, 0.2, { Scale = 1.12 }, Enum.EasingStyle.Back)
+end)
+toggle.MouseLeave:Connect(function()
+	tween(toggleScale, 0.2, { Scale = 1 })
+end)
+toggle.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		tween(toggleScale, 0.1, { Scale = 0.88 })
+	end
+end)
+toggle.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		tween(toggleScale, 0.25, { Scale = 1 }, Enum.EasingStyle.Back)
+	end
+end)
+
+closeBtn.MouseEnter:Connect(function() tween(closeBtn, 0.15, { BackgroundColor3 = Color3.fromRGB(255, 120, 130) }) end)
+closeBtn.MouseLeave:Connect(function() tween(closeBtn, 0.15, { BackgroundColor3 = Color3.fromRGB(255, 70, 90) }) end)
+closeBtn.MouseButton1Click:Connect(function() setOpen(false) end)
+
+-- سحب زر الفتح (ضغطة وحدة = فتح/غلق، سحب = تحريك)
+makeDraggable(toggle, toggle, function() setOpen(not isOpen) end)
+-- سحب القائمة من شريط العنوان
+makeDraggable(titleBar, menu)
