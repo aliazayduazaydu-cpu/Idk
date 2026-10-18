@@ -97,5 +97,5 @@ if api and api.stop then
 pcall(api.stop)
 end
 end)
-task.wait()
+task.wait(1)
 end
