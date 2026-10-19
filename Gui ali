@@ -70,9 +70,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fet
 		print("الزر 3")
 loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
 	end },
-	{ Name = "الزر 4", Callback = function()
+	{ Name = "سكربت ادمن", Callback = function()
 		print("الزر 4")
-		-- حط سكربتك هنا
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
 	end },
 	{ Name = "الزر 5", Callback = function()
 		print("الزر 5")
