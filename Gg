@@ -17,11 +17,26 @@ local OFF_COLOR = Color3.fromRGB(255, 70, 90)
 local function OnToggle(Value)
 	if Value then
 		print("Toggle ON")
-		-- كود عند التشغيل
+local Running = true
+
+task.spawn(function()
+    while Running do
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Glitch%20server"))()
+        task.wait(1)
+    end
+end)
 
 	else
 		print("Toggle OFF")
-		-- كود عند الإطفاء
+local Running = false
+
+task.spawn(function()
+    while Running do
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Glitch%20server"))()
+        task.wait(1)
+    end
+end)
+
 	end
 end
 --====================================================--
