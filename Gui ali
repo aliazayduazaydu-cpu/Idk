@@ -62,11 +62,11 @@ local BUTTONS = {
 		print("الزر 1")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Gg"))()
 	end },
-	{ Name = "الزر 2", Callback = function()
+	{ Name = "تحكم ب ادوات", Callback = function()
 		print("الزر 2")
-		-- حط سكربتك هنا
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fetoolorbit/refs/heads/main/Fe"))()
 	end },
-	{ Name = "الزر 3", Callback = function()
+	{ Name = "س", Callback = function()
 		print("الزر 3")
 		-- حط سكربتك هنا
 	end },
