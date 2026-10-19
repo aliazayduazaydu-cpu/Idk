@@ -66,9 +66,9 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/I
 		print("الزر 2")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fetoolorbit/refs/heads/main/Fe"))()
 	end },
-	{ Name = "س", Callback = function()
+	{ Name = "سكربت اخذ ادوات", Callback = function()
 		print("الزر 3")
-		-- حط سكربتك هنا
+loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
 	end },
 	{ Name = "الزر 4", Callback = function()
 		print("الزر 4")
