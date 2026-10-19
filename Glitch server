@@ -1,4 +1,3 @@
-while true do
 local Players=game:GetService("Players")
 local RunService=game:GetService("RunService")
 local SRC=[==[local RunService=game:GetService("RunService")
@@ -97,5 +96,3 @@ if api and api.stop then
 pcall(api.stop)
 end
 end)
-task.wait(1)
-end
