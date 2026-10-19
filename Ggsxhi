@@ -41,7 +41,7 @@ const Win = Rayfield:CreateWindow({Name = "Fling People and stuff hub", Theme = 
 const Main = Win:CreateTab("Main", 0)
 
 Main:CreateInput({
-    Name = "Select Target",
+    Name = "اختار لاعب",
     PlaceholderText = "Username / Display",
     Callback = function(T: string)
         Target = GetTarget(T)
@@ -90,12 +90,12 @@ Main:CreateInput({
     end})
 end
 
-Mvmentbtn("Fling Player", Vector3.new(0, 0, 0), true)
-Mvmentbtn("Fling 2.0", Vector3.new(0, -2.5, 0), true)
-Mvmentbtn("Platform Fly", Vector3.new(0, -2.8, 0), false)
-Mvmentbtn("Magic Carpet", Vector3.new(0, -3.1, 0), false)
-Mvmentbtn("Elevator", Vector3.new(0, -2.6, 0), false)
-Mvmentbtn("Anti Jump", Vector3.new(0, 3.5, 0), false)
+Mvmentbtn("فنق لاعب", Vector3.new(0, 0, 0), true)
+Mvmentbtn("فنق v2", Vector3.new(0, -2.5, 0), true)
+Mvmentbtn("طيرا لاعب فوق بدون فنق", Vector3.new(0, -2.8, 0), false)
+Mvmentbtn("صعد لاعب فوق بدون فنق v2", Vector3.new(0, -3.1, 0), false)
+Mvmentbtn("صعد  لاعب فوق بدون فنق v3", Vector3.new(0, -2.6, 0), false)
+Mvmentbtn("لا تخليه يقفز 🤣", Vector3.new(0, 3.5, 0), false)
 
 @native const function Bind(Name: string, Offset: Vector3)
     local Conn: RBXScriptConnection?
@@ -206,7 +206,7 @@ const Other = Win:CreateTab("Other", 0)
 
 local anflc: RBXScriptConnection?
 Other:CreateToggle({
-    Name = "Anti Fling",
+    Name = "عدم فنق",
     Callback = function(State: boolean)
         if anflc then anflc:Disconnect(); anflc = nil end
         if not State then return end
@@ -238,7 +238,7 @@ if LocalPlayer.Character then
 end
 
 local anti: RBXScriptConnection?
-Other:CreateToggle({Name = "Anti-Void", Callback = function(s: boolean)
+Other:CreateToggle({Name = "مضاد فويد", Callback = function(s: boolean)
     if anti then anti:Disconnect(); anti = nil end
     if not s then return end
     anti = RunService.Heartbeat:Connect(function()
@@ -250,5 +250,3 @@ Other:CreateToggle({Name = "Anti-Void", Callback = function(s: boolean)
         end
     end)
 end})
-
-setclipboard("https://discord.gg/xGucmFjGVD")
