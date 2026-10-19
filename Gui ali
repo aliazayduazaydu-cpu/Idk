@@ -74,13 +74,15 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolG
 		print("الزر 4")
 loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Infinity-Yield-94242"))()
 	end },
-	{ Name = "الزر 5", Callback = function()
+	{ Name = "سكربت fake gamepass", Callback = function()
 		print("الزر 5")
-		-- حط سكربتك هنا
+getgenv().Color = "default" --[[white,black, brown,green,cyan,blue,pink,purple,red,yellow,orange ]]--
+getgenv().TextColor = "default" --[[ rgb,white,black, brown,green,cyan,blue,pink,purple,red,yellow,orange ]]--
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rndmq/Serverlist/refs/heads/main/Server87"))()
 	end },
-	{ Name = "الزر 6", Callback = function()
+	{ Name = "طيران ادمن", Callback = function()
 		print("الزر 6")
-		-- حط سكربتك هنا
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/My-script/refs/heads/main/Admin"))()
 	end },
 }
 --====================================================--
