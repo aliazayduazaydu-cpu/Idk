@@ -8,7 +8,7 @@ local player = Players.LocalPlayer
 --==================== الإعدادات ====================--
 local BUTTON_IMAGE = "rbxassetid://8732036547"        -- صورة الزر
 local CLICK_SOUND  = "rbxassetid://82845990304289"    -- صوت الزر
-local BUTTON_TEXT  = "خبر سيرفرك"
+local BUTTON_TEXT  = "خرب سيرفرك"
 
 local ON_COLOR  = Color3.fromRGB(60, 255, 120)
 local OFF_COLOR = Color3.fromRGB(255, 70, 90)
