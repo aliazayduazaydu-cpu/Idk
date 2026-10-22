@@ -66,9 +66,14 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/aliazayduazaydu-cpu/I
 		print("الزر 2")
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Clarencelaleng234/Fetoolorbit/refs/heads/main/Fe"))()
 	end },
-	{ Name = "سكربت اخذ ادوات", Callback = function()
+	{ Name = "سكربت حلو", Callback = function()
 		print("الزر 3")
-loadstring(game:HttpGet('https://raw.githubusercontent.com/AdminEvilDRagon/ToolGiver/refs/heads/main/ToolGiver.lua'))()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+-- killing is patched RIP movedirection
+
+loadstring(game:HttpGet("https://github.com/pwnmaster99/Scripts/raw/refs/heads/main/OPFinality%20Revived"))()
 	end },
 	{ Name = "سكربت ادمن", Callback = function()
 		print("الزر 4")
